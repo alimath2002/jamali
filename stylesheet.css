@@ -9,7 +9,7 @@
         direction: rtl;background-color: rgb(255, 255, 255);}
         nav div{ display: flexbox; gap:5px;margin:5px ;text-align: center;cursor: pointer ;border-radius: 2%; text-align: center;}
         nav div a{justify-items: center;align-items: center;text-align: center;padding-top: 3%;}
-        nav div:hover{ background-color: rgba(84, 85, 84, 0.726);padding: auto auto;animation: coloringgray 2s;}
+        nav div:hover{ background-color: rgb(121, 121, 137);padding: auto auto;animation: coloringgray 2s;}
         nav div a:hover{color: rgb(44, 44, 39);}
         nav div a:active{color: rgb(180, 44, 143);}
         .navbuttom{height: 100%;width: 100%;}
@@ -18,8 +18,15 @@
         cursor: pointer;text-align:center;}
         .navbuttom{border-radius: 6px;}
 
+
+
         #mainnavcontiner{ box-shadow: 3px 3px rgb(20, 227, 227);} 
-        #toplogo{height:130px ;}    
+        #toplogo{height:130px ;animation: appearlogo 2s;}
+        @keyframes  appearlogo{from{padding-left: 10%;}
+        to{padding-left: 5px;}    
+        }         
+        
+
 
         #menupage{overflow:scroll;border-radius: 5%;animation: imerge 0.3s;}
 #menupage div{border-bottom: 1px solid rgb(237, 235, 235) ;padding: 5%;cursor: pointer;animation: imerge2 2s;}
@@ -36,20 +43,22 @@ to{width: 70%;}
 @keyframes imerge2{from{width: 0%;}
 to{width: 100%;}    
 } 
-@keyframes coloringgray{from{background-color:rgba(255, 255, 255, 0);}
-to{background-color:  rgba(84, 85, 84, 0.726);}    
+@keyframes coloringgray{from{background-color:rgb(255, 255, 255);}
+to{background-color:   rgb(121, 121, 137);}    
 } 
-main{background-color: white;padding-bottom:2% ;}
-    #parta{display: grid ;grid-template-columns:1fr 2fr; gap: 4px ; text-align: center; margin: 5px;
-       }
+main{background-color: white;padding-bottom:2% ;padding-top: 4%;color: rgb(43, 36, 65);}
+    #parta{display: grid ;grid-template-columns:1fr 2fr; gap: 4px ; text-align: center;
+       margin: 4%;padding-right: 5%;}
     #parta img{width:55%;height:auto; border-radius:5% ; border: 5px solid black; margin-bottom:12px; }
     
     #parta div{background-color: white; border-radius:10% ;height:auto;}
     
-    #parta img:hover{width:60%;height:auto; border-radius:5% ; border: 5px solid black; margin-bottom:2px ;}
     #address div{text-align: left;}
     
-    
+
+    #tableofpositions div{border: 1px solid blue;border-radius: 0%;height: 100%;padding: 3px;text-align: center;width: 100%;}
+    #tableofpositions .row div:hover{background-color: rgb(34, 144, 233);animation:listanim 1.5s;color: antiquewhite;}
+
     
     #bartext{animation: bar 10s infinite 1s linear;}
     
@@ -59,17 +68,17 @@ main{background-color: white;padding-bottom:2% ;}
         
     }
     
-    
-    .partb{margin:5px 5px ;}
-    .partb .row{display: grid;grid-template-columns: 1fr 1fr 5fr;align-items: center;text-align: center;width: 100%;}
-    .partb .row:hover{background-color: rgb(99, 255, 47);animation: coloring 1s;}
-
-    .partb div div{align-items: center;display: grid;place-content: center;width: 100%;height: 100%;margin-top:10px;}
+.navbuttom:hover{color: aqua;}
 
     
+    .partb{border-radius: 0%;}
+    .partb .row{display: grid;grid-template-columns: 2fr 2fr 5fr;align-items: center;text-align: center;width: 100%;border-radius: 0%;}
+    .partb div div{align-items: center;display: grid;place-content: center;width: 100%;height: 100%;margin-top:10px;border-radius: 0%;}
+
     
     
-    #partc{display: grid ;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:5px ; } 
+    
+    #partc{display: grid ;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:5px ; } 
     #partc div{display: grid;place-content: center; border-radius: 3%;} 
     #partc div:hover{animation: coloringgray 1s;background-color: rgb(212, 212, 212); } 
 
@@ -79,15 +88,35 @@ main{background-color: white;padding-bottom:2% ;}
     }   
     
     
-    @keyframes scale{50%{transform:scale(2,2) ;}}
+    
     
     
     
     @keyframes sheetpaper{from{right:90%} to{right: 0%;}    
     }
+
+    section  li{line-height: 30px;padding:5px ; border-radius: 10px;}
+    section  li:hover{background-color: rgb(34, 144, 233);animation:listanim 1.5s;color: antiquewhite;}
+    @keyframes listanim{from{background-color:rgba(255, 255, 255, 0);}
+    to{background-color:   rgb(34, 144, 233);}    
+    } 
+
+section{border: 2px solid aqua;border-radius: 20px;}
+
     
     #blurerfoot{position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3;height: 400px;background-color: rgba(33, 115, 230, 0.5);}
     
+
+
+
+
+    #graduates{ background: linear-gradient(to left,rgb(34, 183, 206),rgb(15, 93, 196));}
+ #graduates > div{display: grid; grid-template-columns: 3fr 2fr 5fr;color: aliceblue;
+    border-bottom: 1px  solid white ;padding:5px 5px ;}
+    #graduates div div{width: 100%;text-align: center;display: flex;justify-content: center;align-items: center;}
+    #graduates ::selection{ background-color: rgb(214, 43, 200);}
+
+
     footer{text-align: center;border-top:solid 3px ;display: grid ;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));margin:0px ;color: aliceblue;
     }
     footer div{ text-align: center;z-index: -1;}
@@ -101,10 +130,13 @@ main{background-color: white;padding-bottom:2% ;}
      .minimmm{display: block;} #minimenue{display: none;} }
     
     @media screen and (max-width:560px){nav{position: fixed;} #corpname{display: none; }    .minimmm{display: block;} .overnav{display: none;} 
-    main{margin-top:80px}  #mainnavcontiner{position: fixed;}
-  .navbuttom{display: none;} footer{display: block; width: 100%;} 
+    main{margin-top:100px}  #mainnavcontiner{position: fixed;}  .partb div div{font-size:80%;}
+  .navbuttom{display: none;} footer{display: block; width: 100%;} section  li{font-size: 95%;} section  div{font-size: 76%;}
 #parta{display: grid ;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));} #minimenue{display: block;} .partb div{font-size: 13px;}
 footer div{ height:100px ;}  
 #blurerfoot{ height:150px ;} 
 #toplogo{height:60px ;}}
+
+@media screen and (max-width:340px){  #parta{margin: 0px;padding:0px}  #tableofpositions div div{width: 100%;} 
+.partb{width:100%;} #tableofpositions{width:100%;} .noneimportant{width:81%}}
     

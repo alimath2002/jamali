@@ -10,22 +10,20 @@
 <meta name="_csrf_token" content="ImRjMjNjODI3N2NkMjk4N2EwZGViYzljNzY2ZmQ1YzFlODgyM2FkMWEi.ZtFzTw.XkfH5yG5oPZUjBtNXReGm-tKXaY" />
 <meta name="generator" content="ckan 2.10.1" />
 <link rel="icon" href="../images/sharif-logo-png-transparent.png" type="image/x-icon">
-
+<link href="../jsandcss/menusandfooter.js" type="javascript">
+<link href="../jsandcss/footer.js" type="javascript">
 <link href="stylesheet.css" rel="stylesheet">
-
-<link href="./menu.js" type="javascript">
-
-<link rel="stylesheet" href="back.svg">
-
+<link href="../jsandcss/stylesheet.css" rel="stylesheet">
+<link href="../menu.js" type="javascript">
 <meta name="description" content="Dr jamali personal page">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
 
 <body onclick="down()" onscroll="down()" >
-
-  <img src="../images/head.jpg" alt="SUT-civil" style="position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3;">
+  <img src="../images/head.jpg" alt="SUT-civil" style="position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3; height: 70%;">
   
-  <div style="position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3;height: 400px;background-color: rgba(33, 115, 230, 0.5);" ></div>
+  <div  
+  id="blurerfoot"></div>
   </div>
   
   <div style="color: white;">
@@ -48,45 +46,51 @@
   
   <div onclick="openspcmenu(2)" onmousemove="openspcmenu(2)">
     publication
+    <a href="../index.html" style=" display: block;width: 100%;height: 100%;">
     <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
-      <a href="../publication/paper.html" style=" display: block;width: 100%;height: 100%;"> Papers</a>
-    </div>
+      International Journal Papers
+    </div></a>
+    <a href="../index.html" style=" display: block;width: 100%;height: 100%;"> 
     <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
-      <a href="../publication/research.html" style=" display: block;width: 100%;height: 100%;"> Research</a>
-    </div>
+      Research
+    </div></a>
+    <a href="../index.html" style=" display: block;width: 100%;height: 100%;"> 
+      <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
+        Conference papers
+      </div></a>
     
   </div>
   <div onclick="openspcmenu(3)" onmousemove="openspcmenu(3)">
     people
+    <a href="../index.html" style=" display: block;width: 100%;height: 100%;">
     <div class="aboutmenue3 ; aboutmenuall" style="display: none;">
-      <a href="../people/graduate.html" style=" display: block;width: 100%;height: 100%;">Graduate Students</a>
-    </div>
-    <div class="aboutmenue3 ; aboutmenuall" style="display: none;">
-      <a href="../people/undergraduates.html" style=" display: block;width: 100%;height: 100%;">Graduate Students</a>
-    </div>
+      Graduate Students
+    </div></a>
+   
     
   </div>
   <div onclick="openspcmenu(4)" onmousemove="openspcmenu(4)">
     Courses
+    <a href="../index.html" style=" display: block;width: 100%;height: 100%;">
     <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-      <a href="../courses/fluidmechanic.html" style=" display: block;width: 100%;height: 100%;"> Fluid Mechanics</a>
-    </div>
+       Fluid Mechanics
+    </div></a>
+    <a href="../index.html" style=" display: block;width: 100%;height: 100%;">
     <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-      <a href="../courses/hydrulics.html" style=" display: block;width: 100%;height: 100%;"> Hydraulics</a>
-    </div>
+       Hydraulics
+    </div></a>
+    <a href="../index.html" style=" display: block;width: 100%;height: 100%;">
     <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-      <a href="../courses/Environmentaleng.html" style=" display: block;width: 100%;height: 100%;"> Environmental Hydraulics</a>
-    </div>
+      Environmental Hydraulics
+    </div></a>
+    <a href="../index.html" style=" display: block;width: 100%;height: 100%;">
     <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-      <a href="../courses/creativityeng.html" style=" display: block;width: 100%;height: 100%;"> Creativity and Innovation in Engineering</a>
-    </div>
+       Creativity and Innovation in Engineering
+    </div></a>
   
   </div>
   
-  <div onclick="openspcmenu(5)" onmousemove="openspcmenu(5)">
-    <a href="../news/news.html" style=" display: block;width: 100%;height: 100%;"> News & Events</a>
-  
-  </div>
+ 
     </div>
   </div>
   
@@ -106,7 +110,8 @@
         margin: 10px 10px 4px 10px ;">
       -->
         <div style="display: flexbox; ">
-      <img src="../images/OIP.svg" alt="sharif" style="width: auto; height: 50px;cursor:pointer;display: inline-block; position: fixed;z-index: 1;" 
+      <img src="../images/OIP.svg" alt="sharif" style="width: auto;cursor:pointer;display: inline-block; position: fixed;z-index: 1;
+      padding-left: 5px; padding-top: 10px;" 
       id="toplogo">
       
   <div  class="overnav" style="margin-bottom:13px;direction: rtl;padding-top:5px;padding-right:5px;">
@@ -122,29 +127,6 @@
   
   
   
-  <!--    
-      <script type="text/javascript">
-  
-  function forget(){
-    if(document.querySelector("#englishlang").value==false)
-  {
-    document.querySelector("#persianlang").textContent="";
-    document.querySelector("#englishlang").textContent=""; 
-  }
-  document.querySelector("#englishlang").value=false;
-  }
-  function openlist(){
-    if(document.querySelector("#englishlang").value==false)
-  {
-    document.querySelector("#persianlang").textContent="فارسی";
-    document.querySelector("#englishlang").textContent="english"; 
-    document.querySelector("#englishlang").value=true;   
-  
-  }
-  }
-         </script>
-  -->
-  
      
   </div>  
             
@@ -156,7 +138,7 @@
      
       
    <div style="text-align: right;">
-     <a href="../home/homepage.html" style="color: black;">
+     <a href="../index.html" style="color: black;">
      <h2 id="corpname" style="margin-right: 20px;">
          Dr.Mirmosadegh Jamali
          
@@ -174,7 +156,6 @@
      </div>
      -->
    </div>
-  
   
   
    <script type="text/javascript">
@@ -223,24 +204,27 @@
   }
   
   
-  if(userview > -40  & pageweidth>560){
+  if(userview > -130  & pageweidth>560 &  document.getElementsByClassName('overnav')[0].style.display=="block"  ){
   
-  let a=70+userview*0.5;
+  let a=130+userview*0.8;
   document.getElementById('toplogo').style.height =a+'px';
   
   
+  }else{ 
+    document.getElementById('toplogo').style.height =60+'px';
   }
+
     }
     </script>
   
-  <div style=""  class="navcontainer">
+  <div  class="navcontainer" style="background-color: white;">
     
   </div>
   
   </div>
   
   
-  <div style="height: 60px;background-color: rgb(255, 255, 255);width: 100%; "  class="navcontainer" id="mainnavcontiner">
+  <div style="height: 80px;background: rgb(255, 255, 255);width: 100%; "  class="navcontainer" id="mainnavcontiner">
     
   
   <div style="background-color: rgb(255, 255, 255);direction: rtl;" id="minimenue">
@@ -248,26 +232,23 @@
   </div>
   
    <nav id="navigation">
-    <div class="navbuttom" style="height: 45px;">
-     <a href="../news/news.html" style="display: block;height: 100%;">
-    
-        News and Events
-    
-       </a>
+    <div class="navbuttom" style="height: 45px;padding-top: 10px;padding-bottom: 10px;">
+     
     </div>
     <div class="navbuttom">
       
       
-     <select name="proj" class="navbut" id="selection" onchange="location=this.value;" style="cursor: pointer;gap:3px ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none;  height:100% ;color:black;"> 
-       <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;" selected > Courses</option>
-       <option value="../courses/fluidmechanic.html" style="background-color: rgb(121, 121, 137);cursor: pointer;"> fluid Mechanics</option>
-       <option value="../courses/hydrulics.html" style="background-color: rgb(121, 121, 137);cursor: pointer;">  Hydraulics </option>
-       <option value="../courses/Environmentaleng.html" style="background-color: rgb(121, 121, 137);cursor: pointer;"> Environmental Hydrodynamics </option>
-       <option value="../courses/creativityeng.html" style="background-color: rgb(121, 121, 137);cursor: pointer;"> Creativity and Innovation in Engineering</option>
+     <select name="proj" class="navbut" id="selection2" onchange="location=this.value;" style=" cursor: pointer;gap:3px;height: 100% ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none; height:60px
+     ;color:black;"> 
+       <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;direction:ltr;height: 100%;" selected > Courses</option>
+       <option value="../courses/fluidmechanic.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Fluid Mechanics</option>
+       <option value="../courses/hydrulics.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;">  Hydraulics </option>
+       <option value="../courses/Environmentaleng.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Environmental Hydrodynamics </option>
+       <option value="../courses/creativityeng.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Creativity and Innovation in Engineering</option>
      </select>
   <script type="text/javascript">
   setInterval(()=>{
-    let m=document.querySelector("#selection")[0];
+    let m=document.querySelector(".navbut")[0];
     m.selected='true';
   },1000)
    
@@ -278,45 +259,26 @@
     </div>
     
     <div class="navbuttom">
-    <select name="proj"  class="navbut" id="selection" onchange="location=this.value;" style="cursor: pointer;gap:3px ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none;  height:100% ;color:black;"> 
-      <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;" selected > people</option>
-      <option value="../people/graduates.html" style="background-color: rgb(121, 121, 137);cursor: pointer;"> Graduate Students </option>
-      <option value="../people/undergraduates.html" style="background-color: rgb(121, 121, 137);cursor: pointer;">  undergraduate Students </option>
+    <select name="proj"  class="navbut" id="selection3" onchange="location=this.value;" style="cursor: pointer; height:60px ;gap:3px ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none; height:60px ;color:black;"> 
+      <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;direction:ltr;" selected > people</option>
+      <option value="../index.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Graduate Students </option>
     </select>
   </div>
     
   <div class="navbuttom">
-    <select name="proj" class="navbut"  id="selection" onchange="location=this.value;" style="cursor: pointer;gap:3px ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none;  height:100% ;color:black;"> 
-      <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;" selected > publication</option>
-      <option value="../publication/papers.html" style="background-color: rgb(121, 121, 137);cursor: pointer;"> Papers  </option>
-      <option value="../publication/research.html" style="background-color: rgb(121, 121, 137);cursor: pointer;"> Research And Studies </option>
+    <select name="proj" class="navbut"  id="selection4" onchange="location=this.value;" style="cursor: pointer;gap:3px ;font-family:bnaz;font-size: 20px ;
+    background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none;  height:60px ;color:black;"> 
+      <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;direction:ltr;" selected > publication</option>
+      <option value="../index.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;">International Journal Papers </option>
+      <option value="../publication/research.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Research And Studies </option>
+      <option value="../index.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Conference Papers </option>
     </select>
   </div>
   
      
-    <div class="navbuttom">
-      <select name="proj" class="navbut"  id="selection" onchange="location=this.value;" style="cursor: pointer;gap:3px ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none;  height:100% ;color:black;"> 
-        <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;" selected > About</option>
-        <option value="../index.html" style="background-color: rgb(121, 121, 137);cursor: pointer;"> About Dr. jamali </option>
-      </select>
-    </div>
+    
   
-  <!--
-  <div id="search_box" style="position: relative; " onclick="open_box()">
-  <input type="text" style="width:80% ; border-radius: 10px; background-color: aqua;" id="search_text" >
-  <div id="search_itemsk" class="search_iteml" style="position: absolute;top: 80%;z-index: 1; background-color: white;
-  width: 100%; border-radius: 0% ; height: 400%;overflow: scroll;" inputmode="border-radius:50%" >
-  <div class="search_rsu" id="search_res1">dsd</div>
-  <div class="search_rsu" id="search_res2">sadad</div>
-  <div class="search_rsu" id="search_res3">asd</div>
-  <div class="search_rsu" id="search_res4">23asd</div>
-  <div class="search_rsu" id="search_res5">asd</div>
-  <div class="search_rsu" id="search_res6">efw</div>
-  <div class="search_rsu" id="search_res7">ewfw</div>
-  </div>
-  </div>
-  <script src="search.js" ></script>
-  -->
+  
   
   
   </nav>
@@ -331,10 +293,14 @@
   
   
   </header>
-<div id="navborder"
-style="height: 5px;background:linear-gradient(to right ,rgba(20, 205, 97, 0.963),rgba(43, 94, 205, 0.985));z-index: 1;width: 100%;">
+  
+  <div id="navborder"
+  style="height: 5px;background:linear-gradient(to right ,rgba(20, 205, 97, 0.963),rgba(43, 94, 205, 0.985));z-index: 1;width: 100%;">
+  
+  </div>
+<script  src="menu.js"></script>
+<script src="../jsandcss/menusandfooter.js"></script>
 
-</div>
 
    <main>
       
@@ -361,30 +327,17 @@ style="height: 5px;background:linear-gradient(to right ,rgba(20, 205, 97, 0.963)
 </main>
 
 
-<footer>
-     
-  <div style="height:250px ;">
-   
-     
-
-   
-
-   
+<div id="footercontent">
 
 
-      
+</div>
 
- </footer>
-
-    <div style="background-color: rgb(50, 38, 61); text-align: center;color: rgb(151, 71, 71) ;" >
-        <p> © Copy Right Civil Engineering Department <a  href="mailto:aliseper2002" style="text-decoration:none; color: white;"> ali.m sepehr</a> 2025</p>
-    </div>
-
-<script src="./slide.js"></script>    
-</body>
+    <script src="../jsandcss/footer.js"></script>
 
 
 
-  <script  src="menu.js"></script>
+<script  src="menu.js"></script>
 
 </html>
+
+
