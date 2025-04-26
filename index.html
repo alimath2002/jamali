@@ -118,16 +118,31 @@
       padding-left: 5px; padding-top: 10px;" 
       id="toplogo">
       
-  <div  class="overnav" style="padding:13px;direction: rtl;padding-top:15px;padding-right:15px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180));">
-    Sharif University of Technology
-    
-   </div>
+ 
+      
+      <div style="text-align: right;">
+        <a href="index.html" style="color: black;">
+        <h2 id="corpname" style="padding: 20px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180)); color: aliceblue;
+        font-size: 38px;">
+            Sharif University of Technology
+            
+          </h2>
+     
+        </a>
+     
+        
+      </div>
+
+ 
   
-    <div class="overnav" style="padding:10px;direction: rtl;padding-right:5px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180));">
+    <div class="overnav" style="padding:10px;direction: rtl;padding-right:5px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180));color: aliceblue;
+    font-size: 30px;padding-right:20px ;padding-bottom:14px ;">
       Department of Civil Engineering
   
   </div>
-  <div></div>
+  <div class="overnav">
+    
+  </div>
   
   
   
@@ -136,22 +151,25 @@
             
   
   
+  <script type="text/javascript"> 
+
+var offsets = document.querySelector("body").getBoundingClientRect();
+    var userview = offsets.top;
+    var pageweidth =offsets.width;
+
+
+if (pageweidth<700) {
+
+  
+document.getElementById('corpname').textContent="Sharif University";
+document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
+
+}
+
+  </script>
   
   
-  
-     
-      
-   <div style="text-align: right;">
-     <a href="index.html" style="color: black;">
-     <h2 id="corpname" style="padding: 20px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180));">
-         Dr.Mirmosadegh Jamali
-         
-       </h2>
-  
-     </a>
-  
-     
-   </div>
+    
   
   
    <script type="text/javascript">
@@ -176,7 +194,7 @@
     var offsets = document.querySelector("body").getBoundingClientRect();
     var userview = offsets.top;
     var pageweidth =offsets.width;
-  
+
     if(top < 3 & pageweidth>560){
       
       document.getElementById('corpname').style.display="none";
@@ -210,6 +228,9 @@
     document.getElementById('toplogo').style.height =60+'px';
   }
 
+
+
+
     }
     </script>
   
@@ -234,7 +255,7 @@
     <div class="navbuttom">
       
       
-     <select name="proj" class="navbut" id="selection2" onchange="location=this.value;" style=" cursor: pointer;gap:3px;height: 100% ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none; height:60px
+     <select name="proj" class="navbut" id="selection2" onchange="location=this.value;" style=" cursor: pointer;direction: ltr;gap:3px;height: 100% ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none; height:60px
      ;color:black;"> 
        <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;direction:ltr;height: 100%;" selected > Courses</option>
        <option value="courses/fluidmechanic.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Fluid Mechanics</option>
@@ -255,16 +276,16 @@
     </div>
     
     <div class="navbuttom">
-    <select name="proj"  class="navbut" id="selection3" onchange="location=this.value;" style="cursor: pointer; height:60px ;gap:3px ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none; height:60px ;color:black;"> 
+    <select name="proj"  class="navbut" id="selection3" onchange="location=this.value;" style="cursor: pointer;direction: ltr; height:60px ;gap:3px ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none; height:60px ;color:black;"> 
       <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;direction:ltr;" selected > people</option>
       <option value="#GraduateStudents" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Graduate Students </option>
     </select>
   </div>
     
   <div class="navbuttom">
-    <select name="proj" class="navbut"  id="selection4" onchange="location=this.value;" style="cursor: pointer;gap:3px ;font-family:bnaz;font-size: 20px ;
+    <select name="proj" class="navbut"  id="selection4" onchange="location=this.value;" style="direction: ltr;cursor: pointer;gap:3px ;font-family:bnaz;font-size: 20px ;
     background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none;  height:60px ;color:black;"> 
-      <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;direction:ltr;" selected > publication</option>
+      <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;" selected > publication</option>
       <option value="#InternationalJournalPapers" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;">International Journal Papers </option>
       <option value="publication/research.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Research And Studies </option>
       <option value="#SelectedInternationalConferencePapers" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Conference Papers </option>
@@ -299,7 +320,7 @@
       
   <div id="parta">
     
-      <div class="noneimportant">
+      <div class="noneimportant , noneimportant2">
        <img src="images/personalimage.jpg">
 
    <!--  <div style="margin-bottom: 20px;" ><h2 style="text-align: center; ">contacts</h2></div>-->  
@@ -356,15 +377,15 @@
       <div class="noneimportant" >
        
 <div style="text-align: left;">
-  <div style="padding:2% 0%;"><h1 style="text-align: left;color: rgb(38, 139, 168);">Dr. Mirmosadegh Jamali</h1></div>
+  <div style="padding:2% 0%;"><h1 style="text-align: left;color: rgb(31, 52, 142);font-family: boldedde;" id="maintitle">Dr. Mirmosadegh Jamali</h1></div>
   <b style="font-size: larger;">
-  <div style="padding:0.5% 0% ;">
+  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
    Professor (On leave)
   </div>
-  <div style="padding:0.5% 0% ;">
+  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
    Civil Engineering Department, Sharif University of Technology
   </div>
-  <div style="padding:0.5% 0% ;">
+  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
   Water &   Environmental Engineering
  </div>
 </b>
@@ -372,7 +393,7 @@
 
 
    <h1 style="margin-top:7px ;margin-bottom:9px ;text-align: left;">Research Interests</h1>
-   <p  style=" border-radius:0px; line-height: 135%;">
+   <p  style=" border-radius:0px; line-height: 135%;" id="researchint">
        Environmental Fluid Mechanics (stratified flows, mixing in surface waters, lake dynamics)
    
    Numerical Methods in Engineering (finite element method, boundary element method, finite difference method)
@@ -575,7 +596,7 @@
             </div>  
         
               
-        <div style="background-color: rgb(255, 255, 255);" class="row">
+        <div style="" class="row">
               <div style="">
                 Visiting Associate Professor
     
@@ -584,48 +605,48 @@
               <div style="">
                 2006
                         </div>
-              <div style="background-color:white;">
+              <div >
                 Department of Civil Engineering, MIT, USA    
         
               </div>  
             </div>  
         
         
-            <div style="background-color: rgb(255, 255, 255);" class="row">
-              <div style="">
+            <div  class="row">
+              <div >
                 Visiting Assistant Professor
     
               </div>
               
-              <div style="background-color:white;">
+              <div >
                 
                 Summer 2004
     
               </div>
-              <div style="background-color:white;">
+              <div >
                 Department of Civil Engineering, The University of British Columbia, Vancouver, Canada
     
               </div>  
             </div>  
         
-            <div style="background-color: rgb(255, 255, 255);height: auto;" class="row">
-              <div style="background-color:white;">
+            <div  class="row">
+              <div >
                 Visiting Assistant Professor
     
               </div>
               
-              <div style="">
+              <div >
                 Summer 2003
     
               </div>
-              <div style="background-color:white;">
+              <div >
                 Department of Mathematics, The University of British Columbia, Vancouver, Canada    
         
               </div>  
             </div> 
     
-            <div style="background-color: rgb(255, 255, 255);height: auto;" class="row">
-              <div style="background-color:white;">
+            <div  class="row">
+              <div >
                 Visiting Assistant Professor
     
               </div>
@@ -634,7 +655,7 @@
                 Summer 2002
     
               </div>
-              <div style="background-color:white;">
+              <div >
                 Department of Mathematics, The University of British Columbia, Vancouver, Canada    
         
               </div>  
@@ -954,7 +975,7 @@
 
 </div>
 
-<div>
+<div style="text-align: center;">
    International Association for Hydraulic Research
 
 </div>
@@ -1007,7 +1028,7 @@
  </footer>
 
     <div style="background-color: rgb(50, 38, 61); text-align: center;color: rgb(151, 71, 71) ;display: flex;bottom: 0%;position: fixed;width: 100%; justify-content: center;" >
-        <p> © Copy Right Civil Engineering Department <a  href="https://alimath2002.github.io/alimath2002/" style="text-decoration:none; color: white;"> ali.m sepehr</a> 2025</p>
+        <p> © Copy Right Civil Engineering Department <a  href="https://alimath2002.github.io/alimath2002/" style="text-decoration:none; color: white;"> Ali M. Sepehr</a> 2025</p>
     </div>
 
 </body>
