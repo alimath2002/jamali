@@ -58,6 +58,97 @@ to{width: 100%;}
 @keyframes coloringgray{from{background-color:rgb(255, 255, 255);}
 to{background-color:   rgb(121, 121, 137);}    
 } 
+
+
+
+
+
+
+
+
+
+
+ /* Basic styling for the button */
+    .nav-button {
+      background-color: white;
+     
+      margin-right: 2px;
+      color: rgb(46, 46, 126);
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .nav-button:hover{
+      background: linear-gradient(to left,rgb(34, 183, 206),rgb(15, 93, 196));;
+      color: white;
+      animation: appearmenuebutt 0.65s  ;
+    }
+
+    /* Dropdown menu container */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      
+      
+    }
+
+    /* Dropdown menu items */
+    .dropdown-menu a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      background-color: #f9f9f9;
+      
+    }
+
+    /* Hover effect for menu items */
+    .dropdown-menu a:hover {
+     background: linear-gradient(to left,rgb(34, 183, 206),rgb(15, 93, 196));;
+      color: white;
+      animation: appearmenuebutt 0.65s  ;
+      
+    }
+
+    /* Show the dro/pdown menu on hover */
+    .nav-button:hover .dropdown-menu {
+      display: block;
+    }
+
+
+
+
+
+
+
+
+
+
+
+@keyframes appearmenuebutt{
+
+  from{ color: rgb(46, 46, 126);filter: blur(0px) brightness(6);}
+   to{ color: white;filter: blur(0px) brightness(1);}
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
 main{background-color: white;padding-bottom:2% ;padding-top: 4%;color: rgb(43, 36, 65);}
     #parta{display: grid ;grid-template-columns:1fr 2fr; gap: 4px ; text-align: center;
        margin: 4%;padding-right: 5%;}
@@ -73,9 +164,13 @@ main{background-color: white;padding-bottom:2% ;padding-top: 4%;color: rgb(43, 3
 
     
     #bartext{animation: bar 10s infinite 1s linear;}
+    .appeartextwhite{animation:appeartextwhite 6s ;}    
+
+    @keyframes  appeartextwhite{from{color: white;} to{color: black;}
+        
+    }
     
 
-    
     @keyframes bar {from{right:100%} to{right: 0%;}
         
     }
@@ -134,7 +229,7 @@ section{border: 2px solid aqua;border-radius: 20px;}
     footer div{ text-align: center;z-index: -1;}
     footer div p{padding:8px ;}
     footer div{ height:250px ;} 
-   
+   #backwebimage{height: 70%;}
     
     @media screen and (max-width:910px){nav{display: grid;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;}  .minimmm{display: block;} #minimenue{display: none;} }
 
@@ -142,13 +237,13 @@ section{border: 2px solid aqua;border-radius: 20px;}
      .minimmm{display: block;} #minimenue{display: none;} }
     
     @media screen and (max-width:560px){nav{position: fixed;} #corpname{display: none; }    .minimmm{display: block;} .overnav{display: none;} 
-    main{margin-top:100px}  #mainnavcontiner{position: fixed;}  .partb div div{font-size:80%;}
+    main{margin-top:0px;padding-top: 100px;}  #mainnavcontiner{position: fixed;}  .partb div div{font-size:80%;}
   .navbuttom{display: none;} footer{display: block; width: 100%;} section  li{font-size: 95%;} section  div{font-size: 76%;}
 #parta{display: grid ;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));} #minimenue{display: block;} .partb div{font-size: 13px;}
-footer div{ height:100px ;}  
-#blurerfoot{ height:150px ;} 
+footer div{ height:200px ;margin-bottom: 30px;}   #backwebimage{width: 100%;height:27%;margin-bottom: 40px;}
+#blurerfoot{ height:300px ;} #removeonphone{display: none;}
 #toplogo{height:60px ;} #maintitle{font-size: 25px;}
-}
+.nav-button{display: none;} #navborder{display: none;}   .dropdown-menu{display: none;}}
 
 @media screen and (max-width:340px){  #parta{padding:auto}  #tableofpositions div div{width: 100%;} 
 .partb{width:100%;} #tableofpositions{width:100%;} .noneimportant{width:78%} .noneimportant2{width:83% ;} }

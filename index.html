@@ -22,9 +22,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
 
-<body onclick="down()" onscroll="down()" >
+<body onload="down()" onscroll="down()" >
 
-  <img src="images/head.jpg" alt="SUT-civil" style="position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3; height: 70%;">
+  <img src="images/head.jpg" alt="SUT-civil" style="position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3;" id="backwebimage">
   
   <div  
   id="blurerfoot"></div>
@@ -123,7 +123,7 @@
       <div style="text-align: right;">
         <a href="index.html" style="color: black;">
         <h2 id="corpname" style="padding: 20px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180)); color: aliceblue;
-        font-size: 38px;">
+        font-size: 38px;font-family: boldedde;">
             Sharif University of Technology
             
           </h2>
@@ -171,7 +171,6 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
   
     
   
-  
    <script type="text/javascript">
   
     function down(){
@@ -200,10 +199,9 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
       document.getElementById('corpname').style.display="none";
       document.getElementsByClassName('overnav')[0].style.display="none";
       document.getElementsByClassName('overnav')[1].style.display="none";
+      document.getElementById('mainnavcontiner').style.position="fixed";
       
-      document.getElementById('navigation').style.position="fixed";
-      document.getElementById('navborder').style.position="fixed";
-  
+
     }
     if(userview > -10  & pageweidth>560){
   
@@ -212,8 +210,8 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
    document.getElementsByClassName('overnav')[1].style.display="block";
   
   document.getElementById('navigation').style.position="relative";
-  document.getElementById('navborder').style.position="relative";
-  
+  document.getElementById('mainnavcontiner').style.position="relative";  
+  document.getElementById('navborder').style.zIndex="42";
   
   }
   
@@ -232,6 +230,7 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
 
 
     }
+
     </script>
   
   <div  class="navcontainer" style="background-color: white;">
@@ -246,54 +245,48 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
   </div>
   
    <nav id="navigation">
-    <div class="navbuttom">
-    <div  style="height: 65px;padding-top:0px;padding-bottom:0px;width: 0px;">
+    
+
+  <div  style="height: 75px;padding-top:0px;padding-bottom:0px;width: 0px;" id="removeonphone">
      
-    </div>
+    
   </div>
 
-    <div class="navbuttom">
-      
-      
-     <select name="proj" class="navbut" id="selection2" onchange="location=this.value;" style=" cursor: pointer;direction: ltr;gap:3px;height: 100% ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none; height:60px
-     ;color:black;"> 
-       <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;direction:ltr;height: 100%;" selected > Courses</option>
-       <option value="courses/fluidmechanic.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Fluid Mechanics</option>
-       <option value="courses/hydrulics.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;">  Hydraulics </option>
-       <option value="courses/Environmentaleng.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Environmental Hydrodynamics </option>
-       <option value="courses/creativityeng.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Creativity and Innovation in Engineering</option>
-     </select>
-  <script type="text/javascript">
-  setInterval(()=>{
-    let m=document.querySelector(".navbut")[0];
-    m.selected='true';
-  },1000)
+
    
+    <!-- Navigation button -->
+    <button class="nav-button" style="z-index:71;">
+      Courses
+      <!-- Dropdown menu -->
+      <div class="dropdown-menu" style="z-index: 171;">
+        <a href="courses/fluidmechanic.html" style="z-index: 71;"> Fluid Mechanics</a>
+        <a href="courses/hydrulics.html" style="z-index: 71;"> Hydraulics</a>
+        <a href="courses/Environmentaleng.html" style="z-index: 71;"> Environmental Hydrodynamics </a>
+        <a href="courses/creativityeng.html" style="z-index: 71;"> Creativity and Innovation in Engineering</a>
+      </div>
+    </button>
+
+
+
+<button class="nav-button" style="z-index:71;">
+    <a href="#GraduateStudents" style="color: unset; padding:20px 20px;display: inline-block;">  Graduate Students </a>
+    </button>
+    
+
+
+ <button class="nav-button" style="z-index:71;">
+      publication
+      <!-- Dropdown menu -->
+      <div class="dropdown-menu" style="z-index: 171;">
+        <a href="#InternationalJournalPapers" style="z-index: 71;"> International Journal Papers </a>
+        <a href="#SelectedInternationalConferencePapers" style="z-index: 71;"> Conference Papers</a>
+        <a href="publication/research.html" style="z-index: 71;"> Research And Studies </a>
+      </div>
+    </button>
+
+ 
+  
    
-   </script>
-  
-  
-    </div>
-    
-    <div class="navbuttom">
-    <select name="proj"  class="navbut" id="selection3" onchange="location=this.value;" style="cursor: pointer;direction: ltr; height:60px ;gap:3px ;font-family:bnaz;font-size: 20px ;background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none; height:60px ;color:black;"> 
-      <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;direction:ltr;" selected > people</option>
-      <option value="#GraduateStudents" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Graduate Students </option>
-    </select>
-  </div>
-    
-  <div class="navbuttom">
-    <select name="proj" class="navbut"  id="selection4" onchange="location=this.value;" style="direction: ltr;cursor: pointer;gap:3px ;font-family:bnaz;font-size: 20px ;
-    background:linear-gradient(to bottom ,rgba(96, 136, 236, 0),rgba(49, 110, 243, 0)) ;width:100% ; border:none;  height:60px ;color:black;"> 
-      <option value="" style="background-color: rgb(121, 121, 137);font-size: 0%;pointer-events: none;" selected > publication</option>
-      <option value="#InternationalJournalPapers" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;">International Journal Papers </option>
-      <option value="publication/research.html" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Research And Studies </option>
-      <option value="#SelectedInternationalConferencePapers" style="background-color: rgb(121, 121, 137);cursor: pointer;direction:ltr;"> Conference Papers </option>
-    </select>
-  </div>
-  
-     
-    
   
   
   
@@ -301,7 +294,11 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
   </nav>
   
   
-    
+     
+  <div id="navborder"
+  style="height: 5px;background:linear-gradient(to right ,rgba(20, 205, 97, 0.963),rgba(43, 94, 205, 0.985));z-index: 1;width: 100%;">
+  
+  </div>
      
   </div>
   
@@ -311,10 +308,7 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
   
   </header>
   
-  <div id="navborder"
-  style="height: 5px;background:linear-gradient(to right ,rgba(20, 205, 97, 0.963),rgba(43, 94, 205, 0.985));z-index: 1;width: 100%;">
   
-  </div>
 
    <main>
       
@@ -332,7 +326,7 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
       </div>
 
       <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>ADDRESS</b></div>
-      <div style="margin-bottom: 14px;">
+      <div style="margin-bottom: 14px;" class="appeartextwhite">
        Dr. Mirmosadegh Jamali, P. Eng.
 
        Department of Civil Engineering
@@ -350,13 +344,13 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
       </div>
 
       <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>OFFICE</b></div>
-      <div style="margin-bottom: 14px;">
+      <div style="margin-bottom: 14px;" class="appeartextwhite">
        411 in  Civil Engineering Department
             </div>
 
       <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>ASSISTANT</b></div>
       <div style="margin-bottom: 14px;">
-      <a href="mailto:aliseper2002" style="margin-bottom: 8px;">Ali M. Sepehr</a>
+      <a href="mailto:aliseper2002" style="margin-bottom: 8px;" class="appeartextwhite">Ali M. Sepehr</a>
       </div>
 
     </div>
