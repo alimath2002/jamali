@@ -3,7 +3,47 @@
     @font-face{font-family:bnazitalic;src: url("./fonts/static/Roboto_Condensed-Italic.ttf");}
     @font-face{font-family:boldedde;src: url("./fonts/static/Bitter-Bold.ttf");}
     *{margin: 0px; font-family:bnaz ;}
-    body {background-color: white;}
+    body {background-color:white; height: 100%;}
+    
+
+#beforeloading{height:100%;width: 100%;display: flex;text-align: center;align-items: center;justify-content: center;
+height: 100%;}
+
+#waitloading1{transform: rotate(45deg);
+width: 100px;
+height: 100px;
+  border-radius: 50% 50%;
+  background:linear-gradient(to right,rgb(10, 243, 208),rgb(243, 248, 251));
+  position: relative;
+  margin-top: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+animation: spin 2s linear infinite;
+}
+#waitloading2{transform: rotate(45deg);
+width: 95px;
+height: 95px;
+  border-radius: 50% 50%;
+  background-color: white;
+  position: relative;
+
+  
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+    #afterloading{display: none;}
+
+
     a{color:black; text-decoration:none;background-color:rgb(rgba(255, 0, 0, 0), rgba(0, 128, 0, 0), rgba(0, 0, 255, 0));}
     body{margin:0px;}  
         h1{text-align: right ;margin:0px;align-items: flex-end; }

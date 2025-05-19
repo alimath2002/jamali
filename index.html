@@ -22,12 +22,52 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
 
-<body onload="down()" onscroll="down()" >
+<body onload="down() , loadpagedown()" onscroll="down()" >
+
+<div id="beforeloading">
+
+  <div id="waitloading1">
+<div id="waitloading2">
+
+</div>
+
+</div>
+
+
+
+
+
+</div>
+
+ <script type="text/javascript"> 
+function loadpagedown(params) {
+  document.getElementById('beforeloading').style.display='none';
+  document.getElementById('loadingpagetitle').style.display='none';
+   document.getElementById('afterloading').style.display='unset';
+
+   
+  
+}
+
+ </script>
+
+ <div style="display:flexbox;position:unset;align-items: center;justify-items: center;justify-content: center
+ ;padding-top:2%;" id="loadingpagetitle">
+ <div>
+  
+  <br>
+  redirecting to Dr. jamali's website
+  </div>
+ </div>
+
+
+
+  <div id="afterloading">
 
   <img src="images/head.jpg" alt="SUT-civil" style="position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3;" id="backwebimage">
   
   <div  
-  id="blurerfoot"></div>
+  id="blurerfoot">
   </div>
   
   <div style="color: white;">
@@ -218,12 +258,12 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
   
   if(userview > -130  & pageweidth>560 &  document.getElementsByClassName('overnav')[0].style.display=="block"  ){
   
-  let a=130+userview*0.5;
+  let a=130+userview*0.4;
   document.getElementById('toplogo').style.height =a+'px';
   
   
   }else{ 
-    document.getElementById('toplogo').style.height =60+'px';
+    document.getElementById('toplogo').style.height =80+'px';
   }
 
 
@@ -674,7 +714,7 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
 
 
    
-</div>
+
 
 <section style="margin: 3% 3%;padding: 2%;border-radius: 3%;">
 
@@ -1024,7 +1064,7 @@ document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
     <div style="background-color: rgb(50, 38, 61); text-align: center;color: rgb(151, 71, 71) ;display: flex;bottom: 0%;position: fixed;width: 100%; justify-content: center;" >
         <p> © Copy Right Civil Engineering Department <a  href="https://alimath2002.github.io/alimath2002/" style="text-decoration:none; color: white;"> Ali M. Sepehr</a> 2025</p>
     </div>
-
+</div>
 </body>
 
 
