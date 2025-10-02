@@ -1,1075 +1,577 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>jamali</title>
-<meta charset="UTF-8">
-<meta http-equiv="x-UA-compatible" content="ie=edge">
-<meta charset="utf-8" />
-<meta name="csrf_field_name" content="_csrf_token" />
-<meta name="keywords" content="jamali دکتر میرمصدق جمالی sharif civil "/>
-<meta name="_csrf_token" content="ImRjMjNjODI3N2NkMjk4N2EwZGViYzljNzY2ZmQ1YzFlODgyM2FkMWEi.ZtFzTw.XkfH5yG5oPZUjBtNXReGm-tKXaY" />
-<meta name="generator" content="ckan 2.10.1" />
-<link rel="icon" href="images/sharif-logo-png-transparent.png" type="image/x-icon">
-
-<link href="stylesheet.css" rel="stylesheet">
-
-
-<link href="./menu.js" type="javascript">
-<link href="./graduates.js" type="javascript">
-
-
-<meta name="description" content="Dr jamali personal page">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Information Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .required::after {
+            content: " *";
+            color: #e74c3c;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #6e8efb;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input, .checkbox-option input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .inline-fields {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .inline-fields .form-group {
+            flex: 1;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: #6e8efb;
+            background-color: #f0f4ff;
+        }
+        
+        .file-upload input {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .button-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+         
+        .primary-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .secondary-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .secondary-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        button {
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(110, 142, 251, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.invalid input,
+        .form-group.invalid select {
+            border-color: #e74c3c;
+        }
+        
+        .form-group.invalid .error-message {
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            .inline-fields {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
+<body>
 
-<body onload="down() , loadpagedown()" onscroll="down()" >
+       <div style="position: fixed;height:100%;width:100%;background-color: wheat;display: unset;" id="firstpagetocommit">
+     <header >
+            <h1>Pet Risk Check</h1>
+            <div>Get an instant insurance risk assessment for your dog or cat. Our intelligent</div>
+            <div>scoring system evaluates health factors, lifestyle, and breed characteristics</div>
+            <div>to recommend the perfect coverage plan-in under 2 minutes.</div>
+        </header>
+        
+      <button type="submit" class="submit-btn" style="background: rgb(46, 77, 232);" onclick="closepage('firstpagetocommit','secondpaged')">Submit Pet Information</button>
 
-<div id="beforeloading">
 
-  <div id="waitloading1">
-<div id="waitloading2">
+    </div>
+
+<div style="padding:0px;margin:0px;display: none;" id="secondpaged">
+    <div class="container" >
+        <header>
+            <h1>Pet Information Form</h1>
+            <p class="subtitle">Tell us about your furry friend</p>
+        </header>
+        
+        <div class="form-container">
+            <form id="petForm">
+                <div class="form-group">
+                    <label for="petPicture">Pet Picture</label>
+                    <div class="file-upload">
+                        <input type="file" id="petPicture" name="petPicture" accept="image/*">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Species</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="speciesCat" name="species" value="cat" checked onclick="animalkind('cat')">
+                            <label for="speciesCat">Cat</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="speciesDog" name="species" value="dog" onclick="animalkind('dog')">
+                            <label for="speciesDog">Dog</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group" >
+                    <label for="breed">Breed</label>
+                    <select id="breeds" name="chronicCondition" required>
+
+                    </select>
+                </div>
+                
+                <div class="inline-fields">
+                    <div class="form-group" id="ageGroup">
+                        <label for="age" class="required">Age</label>
+                        
+                        <label for="agemonth" >month</label>
+                        <input type="number" id="age" name="age" min="0" max="500" placeholder="months" required>
+
+                        <div class="error-message">Please enter your pet's age</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="weight">Weight</label>
+                        <input type="number" id="weight" name="weight" min="0" max="200" step="0.1" placeholder="kg">
+                    </div>
+                </div>
+                
+                <div class="form-group" id="sexGroup">
+                    <label class="required">Sex</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="sexMale" name="sex" value="male" required>
+                            <label for="sexMale">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="sexFemale" name="sex" value="female">
+                            <label for="sexFemale">Female</label>
+                        </div>
+                    </div>
+                    <div class="error-message">Please select your pet's sex</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Neutered</label>
+                    <div class="radio-group">
+                        <div class="radio-option" id="neu">
+                            <input type="radio" id="neuteredYes" name="neutered" value="yes">
+                            <label for="neuteredYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="neuteredNo" name="neutered" value="no" checked>
+                            <label for="neuteredNo">No</label>
+                        </div>
+                    </div>
+                     <div class="error-message">Please select your pet's Neutered</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Vaccination</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="vaccinationYes" name="vaccination" value="yes" checked>
+                            <label for="vaccinationYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="vaccinationNo" name="vaccination" value="no">
+                            <label for="vaccinationNo">No</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div  class="form-group" id="conditionGroup" >
+                    <label for="chronicCondition" class="required">Chronic Condition</label>
+                    <select id="chronicCondition" name="chronicCondition" required>
+                        <option value="none">None</option>
+                        <option value="disabled">Disabled</option>
+                        <option value="kidneyDisease">Kidney Disease</option>
+
+                        <option value="other">Other</option>
+
+                    </select>
+                    <div class="error-message">Please select a chronic condition option</div>
+                </div>
+
+
+                <div  class="form-group" id="conditionGroup" >
+                    <label for="ActivityCondition" class="required">Activity Level</label>
+                    <select id="ActivityCondition" name="ActivityCondition" required>
+                        <option value="low">Low</option>
+                        <option value="Normal">Normal/Moderate</option>
+                        <option value="high">high</option>
+                    </select>
+                    <div class="error-message">Please select Activity Level</div>
+                </div>
+
+
+
+                <div  class="form-group" id="environmentgroup" >
+                    <label for="EnvironmentCondition" class="required">Environment</label>
+                    <select id="EnvironmentCondition" name="EnvironmentCondition" required>
+                        <option value="indoor">indoor</option>
+                        <option value="Mixed">Mixed (both outdoor/indoor)</option>
+                        <option value="Outdoor">Outdoor</option>
+                    </select>
+                    <div class="error-message">Please select Environment</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="breed">Email</label>
+                    <input type="email" id="breed" name="breed" placeholder="your email">
+                </div>
+                
+                <button type="submit" class="submit-btn" >Submit Pet Information</button>
+            </form>
+        </div>
+        
+        <footer>
+            <p>© 2025 . All rights reserved.</p>
+        </footer>
+    </div>
+</div>
+
+
+
+<div id="thirdpage" style="height: 400%;width: 100%;background:linear-gradient(to right,rgb(128, 238, 60),rgb(25, 177, 17) ); text-align: center;display: none;">
+    <h1 id="showscore">12</h1>
+<div class="form-container " style="margin:4% 10% ;background-color: #f5f7fa;" id="insurances"></div>
+    <button class="-btn input primary-btn" >Download PDF</button> <button class="-btn input secondary-btn" >Email report</button>
+</div>
+
+
 
 </div>
 
-</div>
 
 
 
 
 
-</div>
 
- <script type="text/javascript"> 
-function loadpagedown(params) {
-  document.getElementById('beforeloading').style.display='none';
-  document.getElementById('loadingpagetitle').style.display='none';
-   document.getElementById('afterloading').style.display='unset';
 
+
+
+
+    <script>
+
+
+        document.getElementById('petForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset error states
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('invalid');
+            });
+            
+            let isValid = true;
+            
+            // Check age
+            const ageInput = document.getElementById('age');
+            if (!ageInput.value) {
+                document.getElementById('ageGroup').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Check sex
+            const sexSelected = document.querySelector('input[name="sex"]:checked');
+            if (!sexSelected) {
+                document.getElementById('sexGroup').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Check chronic condition
+            const conditionSelect = document.getElementById('chronicCondition');
+            if (!conditionSelect.value) {
+                document.getElementById('conditionGroup').classList.add('invalid');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                alert('Form submitted successfully!');
+                // In a real application, you would submit the form data to a server here
+            } else {
+                alert('Please fill in all required fields marked with *');
+            }
+            closepage('secondpaged','thirdpage')
+  const neut = document.getElementById('neuteredYes').checked;
+  const vacc = document.getElementById('vaccinationYes').checked;
+  const env = document.getElementById('EnvironmentCondition').value;
+  const act = document.getElementById('ActivityCondition').value;
+
+const score= getscore(ageInput.value,neut,vacc,conditionSelect.value,env,act);
+document.getElementById('showscore').innerText=score;
+let insurances=["1. Basic Plan (Low Risk) Price: $20 / month Coverage: Annual check-up 20% discount on vaccinations Up to $200 emergency coverage",
+"2. Standard Plan (Medium Risk) Price: $40 / month Coverage: Annual check-up + 1 extra vet visit 40% discount on vaccinations Up to $500 emergency coverage Basic lab tests included",
+"3. Premium Plan (High Risk) Price: $70 / month Coverage: Unlimited vet visits 60% discount on vaccinations & lab tests Up to $1,200 emergency coverage Dental care included"]
+if (score<30) {
+    
+   document.getElementById('insurances').innerText=insurances[0]
+}
+if (score<60) {
+    document.getElementById('insurances').innerText=insurances[1]
    
-  
+}
+if (59<score) {
+       document.getElementById('insurances').innerText=insurances[2]
+
+}
+        });
+function getscore(age,neute,vacc,chronic,environment,activity) {
+    let points=0;
+    if(age<=12){
+        points+=5;
+    }if (84<age & age<=120) {
+         points+=15;
+    }if (120<age ) {
+         points+=25;
+    }
+
+if(neute==false){
+            points+=5;
+
 }
 
- </script>
-
- <div style="display:flexbox;position:unset;align-items: center;justify-items: center;justify-content: center
- ;padding-top:2%;" id="loadingpagetitle">
- <div>
-  
-  <br>
-  redirecting to Dr. jamali's website
-  </div>
- </div>
-
-
-
-  <div id="afterloading">
-
-  <img src="images/head.jpg" alt="SUT-civil" style="position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3;" id="backwebimage">
-  
-  <div  
-  id="blurerfoot">
-  </div>
-  
-  <div style="color: white;">
-    <div id="menupage" style="position: absolute;right: 0%;width: 74%;
-    height: 100%;background:linear-gradient(to bottom ,rgb(82, 82, 238), rgb(11, 11, 99)); z-index: 4;display: none;
-    position: fixed;" class="menulittle">
-    <div style="display: flex;align-items: center;justify-content: center;align-content: center;">
-      <h1 style="text-align: center;">
-        Dr. Mirmosadegh jamali
-      </h1>
-  
-    </div>
-  <div onclick="openspcmenu(1)" onmousemove="openspcmenu(1)">
-    About
-    <div class="aboutmenue1 ; aboutmenuall" style="display: none;">
-      <a href="index.html" style=" display: block;width: 100%;height: 100%;"> Professor Jamali</a>
-    </div>
-    
-  </div>
-  
-  <div onclick="openspcmenu(2)" onmousemove="openspcmenu(2)">
-    publication
-    <a href="#InternationalJournalPapers" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
-      International Journal Papers
-    </div></a>
-    <a href="publication/research.html" style=" display: block;width: 100%;height: 100%;"> 
-    <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
-      Research
-    </div></a>
-    <a href="#SelectedInternationalConferencePapers" style=" display: block;width: 100%;height: 100%;"> 
-      <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
-        Conference papers
-      </div></a>
-    
-  </div>
-  <div onclick="openspcmenu(3)" onmousemove="openspcmenu(3)">
-    people
-    <a href="#GraduateStudents" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue3 ; aboutmenuall" style="display: none;">
-      Graduate Students
-    </div></a>
-   
-    
-  </div>
-  <div onclick="openspcmenu(4)" onmousemove="openspcmenu(4)">
-    Courses
-    <a href="courses/fluidmechanic.html" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-       Fluid Mechanics
-    </div></a>
-    <a href="courses/hydrulics.html" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-       Hydraulics
-    </div></a>
-    <a href="courses/Environmentaleng.html" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-      Environmental Hydraulics
-    </div></a>
-    <a href="courses/creativityeng.html" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-       Creativity and Innovation in Engineering
-    </div></a>
-  
-  </div>
-  
- 
-    </div>
-  </div>
-  
-  
-    <div style="position: absolute;right: 0%;width: 100%;height:100%; 
-    background-color: rgba(5, 4, 4, 0.523); z-index: 3; position: fixed;display: none;"
-    onclick="closemenue()" class="menulittle">
-  
-  
-    </div>
-  
-    <header >
-       
-  
-  <!--     
-        <div style=" display: inline;direction: ltr;display: flexbox; text-align: left;
-        margin: 10px 10px 4px 10px ;">
-      -->
-        <div style="display: flexbox; ">
-      <img src="images/OIP.png" alt="sharif" style="width: auto;cursor:pointer;display: inline-block; position: fixed;z-index: 1;
-      padding-left: 5px; padding-top: 10px;" 
-      id="toplogo">
-      
- 
-      
-      <div style="text-align: right;">
-        <a href="index.html" style="color: black;">
-        <h2 id="corpname" style="padding: 20px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180)); color: aliceblue;
-        font-size: 38px;font-family: boldedde;">
-            Sharif University of Technology
-            
-          </h2>
-     
-        </a>
-     
-        
-      </div>
-
- 
-  
-    <div class="overnav" style="padding:10px;direction: rtl;padding-right:5px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180));color: aliceblue;
-    font-size: 30px;padding-right:20px ;padding-bottom:14px ;">
-      Department of Civil Engineering
-  
-  </div>
-  <div class="overnav">
-    
-  </div>
-  
-  
-  
-     
-  </div>  
-            
-  
-  
-  <script type="text/javascript"> 
-
-var offsets = document.querySelector("body").getBoundingClientRect();
-    var userview = offsets.top;
-    var pageweidth =offsets.width;
-
-
-if (pageweidth<700) {
-
-  
-document.getElementById('corpname').textContent="Sharif University";
-document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
+if(chronic!='none'){
+            points+=25;
 
 }
 
-  </script>
-  
-  
+if(vacc==false){
+points+=5;
+
+}
+if(activity=='low'){
+points+=10;
+}
+if(environment!='indoor'){
+points+=10;
+
+}
+
+
+return points;
+}
+
+        function closepage(value,open){
+        document.getElementById(value).style.display='none';
+        document.getElementById(open).style.display='unset';
+}
+animalkind('cat')
+function animalkind(param) {
+document.getElementById('breeds').innerHTML='';
+    if(param=='cat'){
+
+Cats=[
+,' Persian '
+, 'Siamese  '
+, 'Moggie / Domestic Shorthair (mixed-breed)'
+, 'Maine Coon '
+, 'British Shorthair  '
+, 'Ragdoll'
+, 'Sphynx'
+, 'Scottish Fold'  
+, 'Bengal '
+, 'Egyptian Mau'
+    ]
+    Cats.map((val)=>console.log(
+document.getElementById('breeds').innerHTML=`
+                        <option value=${val}>${val}</option>             
+`+document.getElementById('breeds').innerHTML
+    ))
+
+
+
+    }else{
+Dogs=['German Shepherd '
+, 'Golden Retriever '
+,' Bulldog (incl. English/French)  '
+, 'Shih Tzu'  
+, 'Poodle '
+, 'Labrador Retriever '
+, 'Beagle  '
+,' Pug  '
+, 'Husky '
+, 'Saluki ']
+    Dogs.map((val)=>console.log(
+document.getElementById('breeds').innerHTML=`
+                        <option value=${val}>${val}</option>             
+`+document.getElementById('breeds').innerHTML
+    ))
+    }
     
-  
-   <script type="text/javascript">
-  
-    function down(){
-
-
-      
-
-        let m=document.getElementsByClassName('navbut');
-
-        for (let index = 0; index < m.length; index++) {
-        m[index][0].selected='true';
-        
-    }
-
-
-
-
-    var offsets = document.getElementById('navigation').getBoundingClientRect();
-    var top = offsets.top;
-    var offsets = document.querySelector("body").getBoundingClientRect();
-    var userview = offsets.top;
-    var pageweidth =offsets.width;
-
-    if(top < 3 & pageweidth>560){
-      
-      document.getElementById('corpname').style.display="none";
-      document.getElementsByClassName('overnav')[0].style.display="none";
-      document.getElementsByClassName('overnav')[1].style.display="none";
-      document.getElementById('mainnavcontiner').style.position="fixed";
-      
-
-    }
-    if(userview > -10  & pageweidth>560){
-  
-   document.getElementById('corpname').style.display="block";
-   document.getElementsByClassName('overnav')[0].style.display="block";
-   document.getElementsByClassName('overnav')[1].style.display="block";
-  
-  document.getElementById('navigation').style.position="relative";
-  document.getElementById('mainnavcontiner').style.position="relative";  
-  document.getElementById('navborder').style.zIndex="42";
-  
-  }
-  
-  
-  if(userview > -130  & pageweidth>560 &  document.getElementsByClassName('overnav')[0].style.display=="block"  ){
-  
-  let a=130+userview*0.4;
-  document.getElementById('toplogo').style.height =a+'px';
-  
-  
-  }else{ 
-    document.getElementById('toplogo').style.height =80+'px';
-  }
-
-
-
-
-    }
+}
 
     </script>
-  
-  <div  class="navcontainer" style="background-color: white;">
-   
-  
-  
-  <div style="height: 90px;background: rgb(255, 255, 255);width: 100%; "  class="navcontainer" id="mainnavcontiner">
-    
-  
-  <div style="background-color: rgb(255, 255, 255);direction: rtl;" id="minimenue">
-    <img style="cursor: pointer;" onclick="openmenue()" width="48" height="48" src="https://img.icons8.com/color/48/menu--v1.png" alt="menu--v1"/>
-  </div>
-  
-   <nav id="navigation">
-    
-
-  <div  style="height: 75px;padding-top:0px;padding-bottom:0px;width: 0px;" id="removeonphone">
-     
-    
-  </div>
-
-
-   
-    <!-- Navigation button -->
-    <button class="nav-button" style="z-index:71;">
-      Courses
-      <!-- Dropdown menu -->
-      <div class="dropdown-menu" style="z-index: 171;">
-        <a href="courses/fluidmechanic.html" style="z-index: 71;"> Fluid Mechanics</a>
-        <a href="courses/hydrulics.html" style="z-index: 71;"> Hydraulics</a>
-        <a href="courses/Environmentaleng.html" style="z-index: 71;"> Environmental Hydrodynamics </a>
-        <a href="courses/creativityeng.html" style="z-index: 71;"> Creativity and Innovation in Engineering</a>
-      </div>
-    </button>
-
-
-
-<button class="nav-button" style="z-index:71;">
-    <a href="#GraduateStudents" style="color: unset; padding:20px 20px;display: inline-block;">  Graduate Students </a>
-    </button>
-    
-
-
- <button class="nav-button" style="z-index:71;">
-      publication
-      <!-- Dropdown menu -->
-      <div class="dropdown-menu" style="z-index: 171;">
-        <a href="#InternationalJournalPapers" style="z-index: 71;"> International Journal Papers </a>
-        <a href="#SelectedInternationalConferencePapers" style="z-index: 71;"> Conference Papers</a>
-        <a href="publication/research.html" style="z-index: 71;"> Research And Studies </a>
-      </div>
-    </button>
-
- 
-  
-   
-  
-  
-  
-  
-  </nav>
-  
-  
-     
-  <div id="navborder"
-  style="height: 5px;background:linear-gradient(to right ,rgba(20, 205, 97, 0.963),rgba(43, 94, 205, 0.985));z-index: 1;width: 100%;">
-  
-  </div>
-     
-  </div>
-  
-  
-   
-  
-  
-  </header>
-  
-  
-
-   <main>
-      
-  <div id="parta">
-    
-      <div class="noneimportant , noneimportant2">
-       <img src="images/personalimage.jpg">
-
-   <!--  <div style="margin-bottom: 20px;" ><h2 style="text-align: center; ">contacts</h2></div>-->  
-<div style="margin-left: 20%;text-align: left;margin-right: 10%;">
-
-       <div style="padding: 10px;border-radius: 0;margin-top: 30px;"><b>EMAIL</b></div>
-      <div style="margin-bottom: 14px;">
-      <a href="mailto:jamali@sharif.edu" style="margin-bottom: 8px;color: blue;">jamali[at]sharif.edu</a>
-      </div>
-
-      <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>ADDRESS</b></div>
-      <div style="margin-bottom: 14px;" class="appeartextwhite">
-       Dr. Mirmosadegh Jamali, P. Eng.
-
-       Department of Civil Engineering
-       
-       Sharif University of Technology
-       
-       Azadi Avenue
-       
-       Tehran, Iran
-      </div>
-
-      <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>TELEPHONE</b></div>
-      <div style="margin-bottom: 14px;">
-      <a href="callto:+98 021 6616 4215" style="margin-bottom: 8px;color: blue;cursor: pointer;">+98 (21) 6616-4215</a>
-      </div>
-
-      <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>OFFICE</b></div>
-      <div style="margin-bottom: 14px;" class="appeartextwhite">
-       411 in  Civil Engineering Department
-            </div>
-
-      <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>ASSISTANT</b></div>
-      <div style="margin-bottom: 14px;">
-      <a href="mailto:aliseper2002" style="margin-bottom: 8px;" class="appeartextwhite">Ali M. Sepehr</a>
-      </div>
-
-    </div>
-      
-
-       
-      
-
-
-
-      
-        </div>
-        
-        
-
-    
-     
-      <div class="noneimportant" >
-       
-<div style="text-align: left;">
-  <div style="padding:2% 0%;"><h1 style="text-align: left;color: rgb(31, 52, 142);font-family: boldedde;" id="maintitle">Dr. Mirmosadegh Jamali</h1></div>
-  <b style="font-size: larger;">
-  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
-   Professor (On leave)
-  </div>
-  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
-   Civil Engineering Department, Sharif University of Technology
-  </div>
-  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
-  Water &   Environmental Engineering
- </div>
-</b>
-
-
-
-   <h1 style="margin-top:7px ;margin-bottom:9px ;text-align: left;">Research Interests</h1>
-   <p  style=" border-radius:0px; line-height: 135%;" id="researchint">
-       Environmental Fluid Mechanics (stratified flows, mixing in surface waters, lake dynamics)
-   
-   Numerical Methods in Engineering (finite element method, boundary element method, finite difference method)
-   
-   Hydraulics (sediment transport, vegetated flows)
-   
-   Coastal and Ocean Engineering (wave hydrodynamics, off-shore structures, coastal sediment transport, numerical modeling)
-   
-   Thin-walled Structures
-   </p>
-
-</div>
-
-       <h2 style="margin-top: 5%;text-align: left;margin-bottom: 2%;">Journal Review</h2>
-<div style="text-align: left;padding-left: 2%;padding-top: 5px;">
-       <li>
-           Journal of Fluid Mechanics
-       </li>
-       
-       
-       
-       <li>
-           Physics of Fluids
-       
-       
-       </li>
-       
-       
-       
-       <li>
-           Journal of Hydraulic Engineering, ASCE
-       
-           
-       </li>
-       
-       
-       
-       <li>
-           Canadian Journal of Civil Engineers
-       
-       
-       </li>
-       
-       
-       <li>
-           International Journal for Numerical Methods in Fluids
-       
-           
-       </li>
-       
-       <li>
-           Advances in Water Resources
-       
-       
-       </li>
-       
-       <li>
-           Journal of Coastal research
-       
-       
-       
-       </li>
-       
-       <li>
-       
-           Journal of Hydro-Environment
-       
-       
-       </li>
-       
-       </div>
-
-
-       <div style="margin-top: 5%;">
-
-        <h3 style="display: grid;place-content: center;">Educational Background</h3>
-
-        <div class="partb" style="border-radius: 0%;">
-          
-          <div style="background-color: rgb(255, 255, 255);height: auto;" class="row">
-            <div style="background-color:white;">
-        Degree
-            </div>
-            
-            <div style="border-radius: 0%;">
-            Date
-            </div>
-            <div style="border-radius: 0%;">
-         _
-            </div>  
-          </div> 
-        
-        
-            <div style="background-color: white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-          
-        Ph.D.
-              </div>
-              
-              <div style="border-radius: 0%;">
-                1993 - 1998
-              </div>
-              <div style="border-radius: 0%;">
-                Civil Engineering, The University of British Columbia, Vancouver, Canada
-              </div>  
-            </div>  
-        
-              
-        <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-                M.Sc.
-              </div>
-              
-              <div style="border-radius: 0%;">
-                1997 - 2000
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-                Applied Mathematics, The University of British Columbia, Vancouver, Canada
-        
-        
-              </div>  
-            </div>  
-        
-        
-            <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-                M.A.Sc.
-              </div>
-              
-              <div style="background-color:white;border-radius: 0%;">	
-              1987 - 1990
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-                Structural Engineering, Sharif University of Technology, Tehran, Iran
-              </div>  
-            </div>  
-        
-            <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="background-color:white;border-radius: 0%;">
-                B.A.Sc.
-              </div>
-              
-              <div style="border-radius: 0%;">
-                1983 - 1987
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-                Civil Engineering, Sharif University of Technology, Tehran, Iran
-        
-        
-              </div> 
-
-
-
-
-              
-              
-              
-            </div>  
-        </div>
-
-
-       </div>
-
-
-
-       <div id="tableofpositions">
-
-        <h3 style="display: grid;place-content: center;padding-top: 20px;padding-bottom: 1%;">Academic Background</h3>
-
-        <div class="partb" >
-          
-          <div style="background-color: rgb(255, 255, 255);" class="row">
-            <div >
-              position
-            </div>
-            
-            <div >
-            Date
-            </div>
-            <div >
-            Department
-            </div>  
-          </div> 
-        
-        
-            <div style="" class="row">
-              <div >
-          
-                Faculty Member
-              </div>
-              
-              <div style="">
-                1999-present
-    
-              </div>
-              <div style="">
-                Department of Civil Engineering, Sharif University of Technology, Tehran, Iran
-    
-              </div>  
-            </div>  
-        
-              
-        <div style="" class="row">
-              <div style="">
-                Visiting Associate Professor
-    
-              </div>
-              
-              <div style="">
-                2006
-                        </div>
-              <div >
-                Department of Civil Engineering, MIT, USA    
-        
-              </div>  
-            </div>  
-        
-        
-            <div  class="row">
-              <div >
-                Visiting Assistant Professor
-    
-              </div>
-              
-              <div >
-                
-                Summer 2004
-    
-              </div>
-              <div >
-                Department of Civil Engineering, The University of British Columbia, Vancouver, Canada
-    
-              </div>  
-            </div>  
-        
-            <div  class="row">
-              <div >
-                Visiting Assistant Professor
-    
-              </div>
-              
-              <div >
-                Summer 2003
-    
-              </div>
-              <div >
-                Department of Mathematics, The University of British Columbia, Vancouver, Canada    
-        
-              </div>  
-            </div> 
-    
-            <div  class="row">
-              <div >
-                Visiting Assistant Professor
-    
-              </div>
-              
-              <div style="">
-                Summer 2002
-    
-              </div>
-              <div >
-                Department of Mathematics, The University of British Columbia, Vancouver, Canada    
-        
-              </div>  
-            </div> 
-
-       </div>
-
-
-      </div>
-
-      </div>
-     
-      
-
-      
-      
-</div>
-
-
-
-
-
-
-   
-
-
-<section style="margin: 3% 3%;padding: 2%;border-radius: 3%;">
-
-  <div id="minimmmmm" style="background-color: white;">
-
-  </div>
-
-  <h2 style="direction: ltr;left: 0%;margin-left: 4%;padding-top: 3%;display: block;margin-left:0% ;
-  background-color: rgb(255, 255, 255);display: grid;place-content: left;padding-bottom: 4%;" id="InternationalJournalPapers"> International Journal Papers</h2>
-  
-  <li>
-    Jamali, M., Seymour, B., and Lawrence, G.  (2003) "Asymptotic analysis of a surface-internal wave interaction", Physics of Fluids, V 15, p 47.
-
-  </li>
-  
-  <li>
-    Jamali, M., Lawrence, G., and Seymour, B. (2003) "A note on the resonant interaction between surface and interfacial waves, " Journal of Fluid Mechanics, V 491, p 1.
-
-
-  </li>
-  
-  <li>
-    Jamali, M. (2003) "Topographic effects on establishment of selective withdrawal," Physics of Fluids, V 15, p 3665.
-
-  
-  </li>
-  
-  <li>
-    Jamali, M., and Seymour , B. (2004) "Surface wave interaction with internal waves on a diffuse interface," Journal of Physical Oceanography, V 34, n 12, p 204.
-
-  
-  </li>
-  
-  <li>
-    Jamali, M., Lawrence, G., and Maloney, K. (2005) "Dispersion in varying-geometry rivers with application to methanol releases," Journal of Hydraulic Engineering, ASCE, V 131, n 5, p 390.
-
-
-
-  </li>
-  
-  <li>
-    Jamali, M., Seymour, B., and Kassaian, R. (2005) "Numerical and experimental study of flow of a stratified fluid over a sill towards a sink," Physics of Fluids, V 17, p 057106.
-
-  
-  </li>
-  
-  <li>
-    Jamali, M. (2006) "BEM modeling of surface water wave motion with laminar boundary layers," Engineering Analysis with Boundary Elements, V 30, p 14.
-
-
-  </li>
-  
-  <li>
-    Jamali, M. (2006) "A coupled boundary element-finite difference model of surface wave motion over a wall turbulent flow," International Journal for Numerical Methods in Fluids, V 51, p 371.
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M. and Lawrence , G. ( 2006) "Viscous wave interaction due to motion of a surface wave over a sediment bed," Journal of Offshore Mechanics and Arctic Engineering, ASME, V 128, p 276.
-
-
-  
-  </li>
-  
-  <li>
-    Jamali, M. and Aghsaee, P. (2007) "Effect of a contraction on selective withdrawal of a linearly stratified fluid from a line sink," Physics of Fluids, V 19, 106602.
-
-  
-  
-  </li>
-  
-  <li>
-    Lawrence, G., Jamali, M., and Maloney, K. (2007) Closure of "dispersion in varying-geometry rivers with application to Mathanol releases," Journal of Hydraulic Engineering, ASCE, V 133, n 9, p 1094.
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M., Nepf, H., and Zhang, X. (2008) "Exchange flow between a canopy and open water," Journal of Fluid Mechanics, V 611, p 237.
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M. and Haddazadegan, H. (2010) "Effects of a sill on selective withdrawal through a point sink in a linearly stratified fluid," Advances in Water Resources, V 33, p 1517.
-
-  
-  
-  </li>
-  <li>
-    Jamali, M. and Seymour, B. (2011) Comment on "Method to derive the differential equation of the free surface boundary," by Chen et al, Groundwater, V 49, p 133.
-
-  
-  
-  </li>
-  
-  <li>
-    Fazeli, M. and Jamali, M. (2012) "Evolution of sub-harmonic interfacial waves generated by a surface wave in three-wave interaction," Scientia Iranica, V 19, p 225.
-
-
-  </li>
-
-  <li>
-    Tahvildari, N. and Jamali, M. (2012) “Cubic nonlinear analysis of interaction between a surface wave and two interfacial waves in an open two-layer fluid,” Fluid Dynamics Research, V 44, n5.
-
-  
-  </li>
-
-  <li>
-    Jamali, M. (2013) “Non-hydrostatic layered flows over a sill,” Fluid Dynamics Research, V 45, n 2.
-
-  
-  </li>
-
-  <li>
-    Marjani, A.A. and Jamali, M. (2014) “Role of exchange flow in salt/water balance of a saline lake,” Dynamics of Atmospheres and Oceans, V 65, pp. 1-16.
-
-  
-  </li>
-
-  <li>
-    Tofighi, M. A. and Jamali, M. (2014), “Dispersion around circular cylinder in surface wave motion,” Scientia Iranica, 21(3), 548-556.
-
-  
-  </li>
-
-  <li>
-    Safaie, A., Fazeli, M. and Jamali, M. (2014) “A technique for detection of interfacial waves forming a two-dimensional pattern,” Fluid Dynamics Research, V46.
-
-  
-  </li>
-  Fazeli, M., Jamali, M., Lawrence, G., and Seymour, B. (2015) “Growth and damping of interfacial waves on a diffuse interface,” Environmental Fluid Mechanics,  V. 15,
-
-
-  <li>
-    Fazeli, M., Safaie, A., and Jamali, M (2017) “Identification of evolving interfacial waves by spatial harmonic analysis,” Environmental Fluid Mechanics, V. 17, 647–664.
-
-  
-  </li>
-
-  <li>
-    Baghbadorani, D, Ataie-Ashtiani B., Beheshti, A., Hadjzaman M., and Jamali, M. (2018) ”Prediction of current-induced local scour around complex piers: Review, revisit, and integration,” Coastal Engineering, V 133, pp. 43-58.
-
-  
-  </li>
-
-  <li>
-    Jamali, M., Davari, H., and Shoaei, F. (2019) “Lateral dispersion in deflected emergent aquatic canopies,” Environmental Fluid Mechanics, V. 19, 833-850.
-
-  
-  </li>
-
-  <li>
-    Jamali, M., Behzadi, S., Safaie, A., and Fazeli, M. (2020), “Experimental and theoretical investigation of cubic stabilization of instability of an interface in surface wave motion,” Physics of Fluids V. 32, issue 2, DOI: 10.1063/1.5128749
-
-  
-  </li>
-  
-</section>
-
-<div  id="SelectedInternationalConferencePapers"></div>
-<section style="margin: 3% 3%;padding: 2%;border-radius: 3%;">
-
-  <div id="minimmmmm" style="background-color: white;">
-
-  </div>
-
-  <h2 style="direction: ltr;left: 0%;margin-left: 4%;padding-top: 3%;display: block;margin-left:0% ;
-  background-color: rgb(255, 255, 255);display: grid;place-content: left;padding-bottom: 4%;"> Selected International Conference Papers</h2>
-  
-  <li>
-    Modjtahedi, Dj. and Jamali, M. (1990) "BEM with Fundamental Sources placed on an Imaginary Boundary", Proceedings of 12th International Conference on Boundary Elements in Engineering held at Hokaido University, Sapporo,   Japan, Vol. 1, p 111-121, Springer-Verlag.
-
-
-  </li>
-  
-  <li>
-    Jamali, M. (1997) "Excitation of internal waves by a surface wave", Proceedings of XXVIIth Conference of IAHR, San Francisco, p 1334.
-
-
-  </li>
-  
-  <li>
-    Jamali, M. and Seymour , B. (2000) "Surface wave interaction with internal waves on a diffuse interface," Proc. 5th Int. Symp. Stratified Flows, Vancouver , Canada , p. 785.
-
-  
-  </li>
-  
-  <li>
-    Jamali, M., Lawrence , G., and Quick, M. (2000) "Generation of oblique internal waves by a surface wave,", Proc. 5th Int. Symp. Stratified Flows, Vancouver , Canada , p. 779.
-
-
-    
-  </li>
-  
-  <li>
-    Jamali, M., Lawrence, G, and Maloney, K. (2002) "Dispersion and fate of methanol spills into rivers," Proc. CSCE-ASCE Joint Environmental Engineering Conference, Niagara Falls, Canada.
-
-
-  </li>
-  
-  <li>
-    Shaaban, S., and Jamali, M. (2003) "Numerical Study of effects of a sill on selective withdrawal," Proc. XXX IAHR Congress , Greece .
-
-
-    
-  </li>
-  
-  <li>
-    Jamali, M. (2004) "BEM modeling of viscous motion of surface water waves," Proc. 23rd Int. Conf. Offshore Mech.& Arctic Eng. , ASME, Vancouver , Canada .
-
-
-  </li>
-  
-  <li>
-    Jamali, M., and Lawrence, G. (2004) "Viscous wave interaction due to motion of a surface wave over a sediment bed," Proc. 23rd Int. Conf. Offshore Mech.& Arctic Eng., ASME, Vancouver, Canada.
-
-  
-  
-  </li>
-  
-  <li>
-    Hasanzadeh, A., and Jamali,(2004) "Experimental study of scour due to breaking waves," Proc. 23rd Int. Conf. Offshore Mech. & Arctic Eng. , ASME, Vancouver , Canada .
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M., and Lawrence , G. (2004) "Effects of variable river geometry on longitudinal dispersion," Proc. Int. Symp. on Environmental Hydraulics, Hong Kong.
-
-  
-  
-  </li>
-  
-  <li>
-  
-    Kian R. and Jamali, M. (2009) "Establishment of selective withdrawal in a two-layer reservoir with a bottom sill," Proc. 33rd IAHR Congress, Vancouver, Canada.
-
-  
-  </li>
-  
-  <li>
-    Rahnamie Zekavat P. and Jamali, M. (2009) "Longitudinal dispersion of oil spills through vegetation due to exchange flow by differential heating", Proc. 33rd IAHR Congress, Vancouver, Canada.
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M. and Marvi, S. (2009) "Partial-depth exchange flow between canopy and open water," Proc. 13th Workshop on Physical Processes in Natural Waters, Palermo, Italy
-
-  
-  
-  </li>
-  <li>
-    Ghazvini, S. and Jamali, M. (2010) "Effects of depth variation of vegetation on vertical mixing," IAHR Environmental Hydraulics, Greece.
-
-  
-  
-  </li>
-  
-  <li>
-    Fazeli, M. and Jamali, M. (2011) "Effects of a diffuse interface on nonlinear resonant interaction between surface and interfacial waves," 7th International Symposium on Stratified Flows, Rome, Italy.
-
-  
-  </li>
-  
-</section>
-
-
-<h2 style="text-align: center; margin-bottom: 20px;" id="GraduateStudents"> Graduate Students</h2> 
-<section id="graduates"  style="padding:10px;" >
-   
-  <script  src="graduates.js"></script>
-
-
-</section>
-
-
-
-<h3 style="display: grid;place-content: center;padding: 15px;">Professional Affiliations</h3>
-
-<div id="partc">
-<div>
-
-  American Geophysical Union
-
-</div>
-
-<div style="text-align: center;">
-   International Association for Hydraulic Research
-
-</div>
-
-
-<div>
-
-
-  American Mathematical Society
-
-
-
-</div>
-
-<div>
-  Engineers & Geoscientists BC
-
-
-</div>
-
-<div>
-  Iranian Hydraulics Society
-
-
-</div>
-
-
-</div>
-  
-     
-
-  
-
-</main>
-
-
-<footer>
-     
-  <div>
-   
-     
-
-   
-
-   
-</div>
-
-      
-
- </footer>
-
-    <div style="background-color: rgb(50, 38, 61); text-align: center;color: rgb(151, 71, 71) ;display: flex;bottom: 0%;position: fixed;width: 100%; justify-content: center;" >
-        <p> © Copy Right Civil Engineering Department <a  href="https://alimath2002.github.io/alimath2002/" style="text-decoration:none; color: white;"> Ali M. Sepehr</a> 2025</p>
-    </div>
-</div>
 </body>
-
-
-  <script  src="menu.js"></script>
-  
-
-
 </html>
