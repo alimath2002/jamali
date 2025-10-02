@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Information Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .required::after {
+            content: " *";
+            color: #e74c3c;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #6e8efb;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input, .checkbox-option input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .inline-fields {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .inline-fields .form-group {
+            flex: 1;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: #6e8efb;
+            background-color: #f0f4ff;
+        }
+        
+        .file-upload input {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .button-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+         
+        .primary-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .secondary-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .secondary-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        button {
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(110, 142, 251, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.invalid input,
+        .form-group.invalid select {
+            border-color: #e74c3c;
+        }
+        
+        .form-group.invalid .error-message {
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            .inline-fields {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+       <div style="position: fixed;height:100%;width:100%;background-color: wheat;display: unset;" id="firstpagetocommit">
+     <header >
+            <h1>Pet Risk Check</h1>
+            <div>Get an instant insurance risk assessment for your dog or cat. Our intelligent</div>
+            <div>scoring system evaluates health factors, lifestyle, and breed characteristics</div>
+            <div>to recommend the perfect coverage plan-in under 2 minutes.</div>
+        </header>
+        
+      <button type="submit" class="submit-btn" style="background: rgb(46, 77, 232);" onclick="closepage('firstpagetocommit','secondpaged')">Submit Pet Information</button>
+
+
+    </div>
+
+<div style="padding:0px;margin:0px;display: none;" id="secondpaged">
+    <div class="container" >
+        <header>
+            <h1>Pet Information Form</h1>
+            <p class="subtitle">Tell us about your furry friend</p>
+        </header>
+        
+        <div class="form-container">
+            <form id="petForm">
+                <div class="form-group">
+                    <label for="petPicture">Pet Picture</label>
+                    <div class="file-upload">
+                        <input type="file" id="petPicture" name="petPicture" accept="image/*">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Species</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="speciesCat" name="species" value="cat" checked onclick="animalkind('cat')">
+                            <label for="speciesCat">Cat</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="speciesDog" name="species" value="dog" onclick="animalkind('dog')">
+                            <label for="speciesDog">Dog</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group" >
+                    <label for="breed">Breed</label>
+                    <select id="breeds" name="chronicCondition" required>
+
+                    </select>
+                </div>
+                
+                <div class="inline-fields">
+                    <div class="form-group" id="ageGroup">
+                        <label for="age" class="required">Age</label>
+                        
+                        <label for="agemonth" >month</label>
+                        <input type="number" id="age" name="age" min="0" max="500" placeholder="months" required>
+
+                        <div class="error-message">Please enter your pet's age</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="weight">Weight</label>
+                        <input type="number" id="weight" name="weight" min="0" max="200" step="0.1" placeholder="kg">
+                    </div>
+                </div>
+                
+                <div class="form-group" id="sexGroup">
+                    <label class="required">Sex</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="sexMale" name="sex" value="male" required>
+                            <label for="sexMale">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="sexFemale" name="sex" value="female">
+                            <label for="sexFemale">Female</label>
+                        </div>
+                    </div>
+                    <div class="error-message">Please select your pet's sex</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Neutered</label>
+                    <div class="radio-group">
+                        <div class="radio-option" id="neu">
+                            <input type="radio" id="neuteredYes" name="neutered" value="yes">
+                            <label for="neuteredYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="neuteredNo" name="neutered" value="no" checked>
+                            <label for="neuteredNo">No</label>
+                        </div>
+                    </div>
+                     <div class="error-message">Please select your pet's Neutered</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Vaccination</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="vaccinationYes" name="vaccination" value="yes" checked>
+                            <label for="vaccinationYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="vaccinationNo" name="vaccination" value="no">
+                            <label for="vaccinationNo">No</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div  class="form-group" id="conditionGroup" >
+                    <label for="chronicCondition" class="required">Chronic Condition</label>
+                    <select id="chronicCondition" name="chronicCondition" required>
+                        <option value="none">None</option>
+                        <option value="disabled">Disabled</option>
+                        <option value="kidneyDisease">Kidney Disease</option>
+
+                        <option value="other">Other</option>
+
+                    </select>
+                    <div class="error-message">Please select a chronic condition option</div>
+                </div>
+
+
+                <div  class="form-group" id="conditionGroup" >
+                    <label for="ActivityCondition" class="required">Activity Level</label>
+                    <select id="ActivityCondition" name="ActivityCondition" required>
+                        <option value="low">Low</option>
+                        <option value="Normal">Normal/Moderate</option>
+                        <option value="high">high</option>
+                    </select>
+                    <div class="error-message">Please select Activity Level</div>
+                </div>
+
+
+
+                <div  class="form-group" id="environmentgroup" >
+                    <label for="EnvironmentCondition" class="required">Environment</label>
+                    <select id="EnvironmentCondition" name="EnvironmentCondition" required>
+                        <option value="indoor">indoor</option>
+                        <option value="Mixed">Mixed (both outdoor/indoor)</option>
+                        <option value="Outdoor">Outdoor</option>
+                    </select>
+                    <div class="error-message">Please select Environment</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="breed">Email</label>
+                    <input type="email" id="breed" name="breed" placeholder="your email">
+                </div>
+                
+                <button type="submit" class="submit-btn" >Submit Pet Information</button>
+            </form>
+        </div>
+        
+        <footer>
+            <p>© 2025 . All rights reserved.</p>
+        </footer>
+    </div>
+</div>
+
+
+
+<div id="thirdpage" style="height: 400%;width: 100%;background:linear-gradient(to right,rgb(128, 238, 60),rgb(25, 177, 17) ); text-align: center;display: none;">
+    <h1 id="showscore">12</h1>
+<div class="form-container " style="margin:4% 10% ;background-color: #f5f7fa;" id="insurances"></div>
+    <button class="-btn input primary-btn" >Download PDF</button> <button class="-btn input secondary-btn" >Email report</button>
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+
+        document.getElementById('petForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset error states
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('invalid');
+            });
+            
+            let isValid = true;
+            
+            // Check age
+            const ageInput = document.getElementById('age');
+            if (!ageInput.value) {
+                document.getElementById('ageGroup').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Check sex
+            const sexSelected = document.querySelector('input[name="sex"]:checked');
+            if (!sexSelected) {
+                document.getElementById('sexGroup').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Check chronic condition
+            const conditionSelect = document.getElementById('chronicCondition');
+            if (!conditionSelect.value) {
+                document.getElementById('conditionGroup').classList.add('invalid');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                alert('Form submitted successfully!');
+                // In a real application, you would submit the form data to a server here
+            } else {
+                alert('Please fill in all required fields marked with *');
+            }
+            closepage('secondpaged','thirdpage')
+  const neut = document.getElementById('neuteredYes').checked;
+  const vacc = document.getElementById('vaccinationYes').checked;
+  const env = document.getElementById('EnvironmentCondition').value;
+  const act = document.getElementById('ActivityCondition').value;
+
+const score= getscore(ageInput.value,neut,vacc,conditionSelect.value,env,act);
+document.getElementById('showscore').innerText=score;
+let insurances=["1. Basic Plan (Low Risk) Price: $20 / month Coverage: Annual check-up 20% discount on vaccinations Up to $200 emergency coverage",
+"2. Standard Plan (Medium Risk) Price: $40 / month Coverage: Annual check-up + 1 extra vet visit 40% discount on vaccinations Up to $500 emergency coverage Basic lab tests included",
+"3. Premium Plan (High Risk) Price: $70 / month Coverage: Unlimited vet visits 60% discount on vaccinations & lab tests Up to $1,200 emergency coverage Dental care included"]
+if (score<30) {
+    
+   document.getElementById('insurances').innerText=insurances[0]
+}
+if (score<60) {
+    document.getElementById('insurances').innerText=insurances[1]
+   
+}
+if (59<score) {
+       document.getElementById('insurances').innerText=insurances[2]
+
+}
+        });
+function getscore(age,neute,vacc,chronic,environment,activity) {
+    let points=0;
+    if(age<=12){
+        points+=5;
+    }if (84<age & age<=120) {
+         points+=15;
+    }if (120<age ) {
+         points+=25;
+    }
+
+if(neute==false){
+            points+=5;
+
+}
+
+if(chronic!='none'){
+            points+=25;
+
+}
+
+if(vacc==false){
+points+=5;
+
+}
+if(activity=='low'){
+points+=10;
+}
+if(environment!='indoor'){
+points+=10;
+
+}
+
+
+return points;
+}
+
+        function closepage(value,open){
+        document.getElementById(value).style.display='none';
+        document.getElementById(open).style.display='unset';
+}
+animalkind('cat')
+function animalkind(param) {
+document.getElementById('breeds').innerHTML='';
+    if(param=='cat'){
+
+Cats=[
+,' Persian '
+, 'Siamese  '
+, 'Moggie / Domestic Shorthair (mixed-breed)'
+, 'Maine Coon '
+, 'British Shorthair  '
+, 'Ragdoll'
+, 'Sphynx'
+, 'Scottish Fold'  
+, 'Bengal '
+, 'Egyptian Mau'
+    ]
+    Cats.map((val)=>console.log(
+document.getElementById('breeds').innerHTML=`
+                        <option value=${val}>${val}</option>             
+`+document.getElementById('breeds').innerHTML
+    ))
+
+
+
+    }else{
+Dogs=['German Shepherd '
+, 'Golden Retriever '
+,' Bulldog (incl. English/French)  '
+, 'Shih Tzu'  
+, 'Poodle '
+, 'Labrador Retriever '
+, 'Beagle  '
+,' Pug  '
+, 'Husky '
+, 'Saluki ']
+    Dogs.map((val)=>console.log(
+document.getElementById('breeds').innerHTML=`
+                        <option value=${val}>${val}</option>             
+`+document.getElementById('breeds').innerHTML
+    ))
+    }
+    
+}
+
+    </script>
+</body>
+</html>
