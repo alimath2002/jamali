@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>فرم ثبت اطلاعات کاربران</title>
+  <link rel="icon" type="image/png" href="./statics/R_logo.png">
 
   <!--
     ============================================================
@@ -23,10 +25,19 @@
 
     html { -webkit-text-size-adjust: 100%; }
 
+    @font-face {
+  font-family: 'MyFont';
+  src: url('/fonts/Ravi-Regular.ttf') ;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
     body {
+        font-family: 'MyFont', sans-serif;
+
       margin: 0;
       min-height: 100vh;
-      font-family: 'Vazirmatn', 'IRANSans', Tahoma, Arial, sans-serif;
       background: linear-gradient(135deg, #eef2f7 0%, #dfe7f1 100%);
       display: flex;
       justify-content: center;
@@ -159,12 +170,44 @@
   </style>
 
   <style>
+    .more_info{cursor: pointer;}
     img{width: 60%;}
     picture{direction: ltr;}
+    #overlayer{
+            display: flex;
+      display: none;
+      z-index: 999;
+      height: 100%;
+      background-color: #111a2561;
+      position:fixed;
+      margin: 0%;
+      width: 100%;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+    #goodmessage{background-color: whitesmoke;
+    display: block;
+  border-radius: 30px;
+  padding: 3%;
+  }
   </style>
 </head>
+
 <body>
 
+<div id="overlayer" >
+<div id="goodmessage" style="margin: 0% 15%;">
+  <div style="justify-content:left"> <picture><img src="./statics/logocm01.png" alt="MOKARRAR LOGO" style="width: 20%;"></picture></div>
+ 
+
+  <h1>با تشکر از زمانی که گذاشتید</h1>
+<p>فرم شما ثبت شد</p>
+
+</div>
+</div>
+
+  
   <div class="container">
     <div style="direction: ltr;">
 <picture><img src="./statics/logocm01.png" alt="MOKARRAR LOGO"></picture>
@@ -195,7 +238,7 @@
 
         <!-- کد ملی -->
         <div>
-          <label for="nationalId">کد ملی <span class="req">*</span></label>
+          <label for="nationalId">کد ملی <span class="req">* </span><span class="more_info" title="برای صدور کارت و مجوز ها"> ℹ️</span></label>
           <input
             type="text"
             id="nationalId"
@@ -389,7 +432,7 @@
       const fieldOfStudy = form.fieldOfStudy.value;
       const userGroup    = form.userGroup.value;
       const organ        = form.organ.value;
-
+      const userID=await getPublicIP();
 
       /* --- اعتبارسنجی --- */
       if (!fullName) {
@@ -424,7 +467,7 @@
       data.append('fieldOfStudy', fieldOfStudy);  // رشته
       data.append('organ', organ);  // رشته
       data.append('userGroup',    userGroup);     // گروه
-
+      data.append('userID',userID)
       /* --- قفل کردن دکمه قبل از ارسال --- */
       isLocked = true;
       submitBtn.disabled = true;
@@ -439,6 +482,7 @@
 
         // چون mode = no-cors است، پاسخ قابل خواندن نیست و ارسال موفق فرض می‌شود
         showSuccess('اطلاعات با موفقیت ثبت شد. با تشکر!');
+        document.getElementById('overlayer').style.display='flex'
         resetForm();
 
       } catch (error) {
@@ -456,6 +500,19 @@
         el.classList.remove('invalid');
       });
     });
+
+    async function getPublicIP() {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    console.log('User Public IP:', data.ip);
+    return data.ip;
+  } catch (error) {
+    console.error('Error fetching IP:', error);
+  }
+}
+
+getPublicIP();
   </script>
 </body>
 </html>
