@@ -255,7 +255,7 @@
             type="text"
             id="organ"
             name="organ"
-            placeholder="مثال:  دانشگاه صنعتی شریف / وزارت راه و شهر سازی ..."
+            placeholder="مثال:  دانشگاه صنعتی اصفهان / آبفای تهران ..."
             required>
         </div>
 
@@ -383,12 +383,12 @@
 
       clearMessage();
 
-      const fullName     = form.fullName.value.trim();
-      const nationalId   = form.nationalId.value.trim();
-      const phone        = form.phone.value.trim();
-      const fieldOfStudy = form.fieldOfStudy.value.trim();
+      const fullName     = form.fullName.value;
+      const nationalId   = form.nationalId.value;
+      const phone        = form.phone.value;
+      const fieldOfStudy = form.fieldOfStudy.value;
       const userGroup    = form.userGroup.value;
-      const organ        = form.organ.value.trim();
+      const organ        = form.organ.value;
 
 
       /* --- اعتبارسنجی --- */
@@ -399,7 +399,7 @@
         return showError('نام و نام خانوادگی باید فقط با حروف فارسی و حداقل ۳ حرف نوشته شود.', form.fullName);
       }
       if (!NATIONAL_ID_REGEX.test(nationalId)) {
-        return showError('کد ملی باید دقیقاً یک عدد ۱۰ رقمی باشد.', form.nationalId);
+        return showError('کد ملی باید دقیقاً یک عدد ۱۰ رقمی باشد.\n از کیبورد انگلیسی استفاده کنید', form.nationalId);
       }
       if (!PHONE_REGEX.test(phone)) {
         return showError('شماره تماس باید ۱۱ رقمی و با 09 شروع شود. مثال: 09123456789', form.phone);
