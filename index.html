@@ -1,1095 +1,461 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
-<title>jamali</title>
-<meta charset="UTF-8">
-<meta http-equiv="x-UA-compatible" content="ie=edge">
-<meta charset="utf-8" />
-<meta name="csrf_field_name" content="_csrf_token" />
-<meta name="keywords" content="jamali دکتر میرمصدق جمالی sharif civil "/>
-<meta name="_csrf_token" content="ImRjMjNjODI3N2NkMjk4N2EwZGViYzljNzY2ZmQ1YzFlODgyM2FkMWEi.ZtFzTw.XkfH5yG5oPZUjBtNXReGm-tKXaY" />
-<meta name="generator" content="ckan 2.10.1" />
-<link rel="icon" href="images/sharif-logo-png-transparent.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فرم ثبت اطلاعات کاربران</title>
 
-<link href="stylesheet.css" rel="stylesheet">
+  <!--
+    ============================================================
+    فیلدهای فرم و هدرهای ارسالی به Google Sheet
+    ============================================================
+    name="fullName"      ->  ستون: نام و نام خانوادگی
+    name="nationalId"    ->  ستون: کد ملی
+    name="phone"         ->  ستون: شماره تماس
+    name="fieldOfStudy"  ->  ستون: رشته
+    name="userGroup"     ->  ستون: گروه
+    submittedAt          ->  ستون: تاریخ ثبت (در Apps Script اضافه می‌شود)
+    ============================================================
+  -->
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Vazirmatn', 'IRANSans', Tahoma, Arial, sans-serif;
+      background: linear-gradient(135deg, #eef2f7 0%, #dfe7f1 100%);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: clamp(12px, 4vw, 40px) clamp(10px, 3vw, 24px);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 620px;
+      background: #fff;
+      border-radius: 16px;
+      padding: clamp(18px, 4vw, 34px);
+      box-shadow: 0 10px 30px rgba(16, 24, 40, .12);
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      text-align: center;
+      color: #1f2d3d;
+      
+      font-size: clamp(18px, 4.5vw, 23px);
+    }
+    h1 {
+      margin: 0 0 6px;
+      text-align: center;
+      color: #1f2d3d;
+      font-size: clamp(18px, 4.5vw, 23px);
+    }
+    .subtitle {
+      text-align: center;
+      color: #7b8794;
+      font-size: clamp(12px, 3vw, 13.5px);
+      margin: 0 0 22px;
+      line-height: 1.7;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0 16px;
+    }
+
+    @media (min-width: 560px) {
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid .full { grid-column: 1 / -1; }
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+      font-size: 14px;
+      color: #344054;
+    }
+
+    .req { color: #dc3545; margin-right: 3px; }
+
+    input[type="text"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 15px;
+      color: #1f2d3d;
+      background: #fbfcfe;
+      border: 1.5px solid #d5dbe3;
+      border-radius: 10px;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      background: #fff;
+      border-color: #28a745;
+      box-shadow: 0 0 0 3px rgba(40, 167, 69, .15);
+    }
+
+    input.invalid, select.invalid, textarea.invalid {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 3px rgba(220, 53, 69, .12);
+    }
+
+    /* ---------- بخش لوگو ---------- */
 
 
-<link href="./menu.js" type="javascript">
-<link href="./graduates.js" type="javascript">
 
 
-<meta name="description" content="Dr jamali personal page">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+    /* ---------- دکمه ارسال ---------- */
+    #submitBtn {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background: #28a745;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+    }
+
+    #submitBtn:hover:not(:disabled) { background: #218838; }
+    #submitBtn:active:not(:disabled) { transform: scale(.99); }
+
+    #submitBtn:disabled {
+      background: #9bbfa6;
+      cursor: not-allowed;
+    }
+
+    /* ---------- پیام‌ها ---------- */
+    #message {
+      margin-top: 14px;
+      min-height: 22px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+
+    #message.success { color: #1e7e34; }
+    #message.error   { color: #dc3545; }
+  </style>
+
+  <style>
+    img{width: 60%;}
+    picture{direction: ltr;}
+  </style>
 </head>
+<body>
 
-<body onload="down() , loadpagedown()" onscroll="down()" >
-
-<div id="beforeloading">
-
-  <div id="waitloading1">
-<div id="waitloading2">
-
-</div>
-
-</div>
-
-
-
-
-
-</div>
-
- <script type="text/javascript"> 
-function loadpagedown(params) {
-  document.getElementById('beforeloading').style.display='none';
-  document.getElementById('loadingpagetitle').style.display='none';
-   document.getElementById('afterloading').style.display='unset';
-
-   
-  
-}
-
- </script>
-
- <div style="display:flexbox;position:unset;align-items: center;justify-items: center;justify-content: center
- ;padding-top:2%;" id="loadingpagetitle">
- <div>
-  
-  <br>
-  redirecting to Dr. jamali's website
-  </div>
- </div>
-
-
-
-  <div id="afterloading">
-
-  <img src="images/head.jpg" alt="SUT-civil" style="position: absolute;bottom: 0%;width: 100%;position: fixed;z-index: -3;" id="backwebimage">
-  
-  <div  
-  id="blurerfoot">
-  </div>
-  
-  <div style="color: white;">
-    <div id="menupage" style="position: absolute;right: 0%;width: 74%;
-    height: 100%;background:linear-gradient(to bottom ,rgb(82, 82, 238), rgb(11, 11, 99)); z-index: 4;display: none;
-    position: fixed;" class="menulittle">
-    <div style="display: flex;align-items: center;justify-content: center;align-content: center;">
-      <h1 style="text-align: center;">
-        Dr. Mirmosadegh jamali
-      </h1>
-  
-    </div>
-  <div onclick="openspcmenu(1)" onmousemove="openspcmenu(1)">
-    About
-    <div class="aboutmenue1 ; aboutmenuall" style="display: none;">
-      <a href="index.html" style=" display: block;width: 100%;height: 100%;"> Professor Jamali</a>
+  <div class="container">
+    <div style="direction: ltr;">
+<picture><img src="./statics/logocm01.png" alt="MOKARRAR LOGO"></picture>
     </div>
     
-  </div>
-  
-  <div onclick="openspcmenu(2)" onmousemove="openspcmenu(2)">
-    publication
-    <a href="#InternationalJournalPapers" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
-      International Journal Papers
-    </div></a>
-    <a href="publication/research.html" style=" display: block;width: 100%;height: 100%;"> 
-    <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
-      Research
-    </div></a>
-    <a href="#SelectedInternationalConferencePapers" style=" display: block;width: 100%;height: 100%;"> 
-      <div class="aboutmenue2 ; aboutmenuall" style="display: none;">
-        Conference papers
-      </div></a>
-    
-  </div>
-  <div onclick="openspcmenu(3)" onmousemove="openspcmenu(3)">
-    people
-    <a href="#GraduateStudents" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue3 ; aboutmenuall" style="display: none;">
-      Graduate Students
-    </div></a>
-   
-    
-  </div>
-  <div onclick="openspcmenu(4)" onmousemove="openspcmenu(4)">
-    Courses
-    <a href="http://ocw.sharif.edu/course/id/156/%D9%85%DA%A9%D8%A7%D9%86%DB%8C%DA%A9-%D8%B3%DB%8C%D8%A7%D9%84%D8%A7%D8%AA-1.html" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-       Fluid Mechanics
-    </div></a>
-    <a href="http://ocw.sharif.edu/course/id/122/%D9%85%DB%8C%D8%B1%D9%85%D8%B5%D8%AF%D9%82-%D8%AC%D9%85%D8%A7%D9%84%DB%8C-/%D9%87%DB%8C%D8%AF%D8%B1%D9%88%D9%84%DB%8C%DA%A9.html" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-       Hydraulics
-    </div></a>
-    <a href="http://ocw.sharif.edu/course/id/121/%D9%85%DB%8C%D8%B1%D9%85%D8%B5%D8%AF%D9%82-%D8%AC%D9%85%D8%A7%D9%84%DB%8C-/%D9%87%DB%8C%D8%AF%D8%B1%D9%88%D8%AF%DB%8C%D9%86%D8%A7%D9%85%DB%8C%DA%A9-%D9%85%D8%AD%DB%8C%D8%B7-%D8%B2%DB%8C%D8%B3%D8%AA.html" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-      Environmental Hydraulics
-    </div></a>
-    <a href="https://maktabkhooneh.org/course/%D8%AE%D9%84%D8%A7%D9%82%DB%8C%D8%AA-%D9%86%D9%88%D8%A2%D9%88%D8%B1%DB%8C-%D9%85%D9%87%D9%86%D8%AF%D8%B3%DB%8C-mk550/" style=" display: block;width: 100%;height: 100%;">
-    <div class="aboutmenue4 ; aboutmenuall" style="display: none;">
-       Creativity and Innovation in Engineering
-    </div></a>
-  
-  </div>
-  
- 
-    </div>
-  </div>
-  
-  
-    <div style="position: absolute;right: 0%;width: 100%;height:100%; 
-    background-color: rgba(5, 4, 4, 0.523); z-index: 3; position: fixed;display: none;"
-    onclick="closemenue()" class="menulittle">
-  
-  
-    </div>
-  
-    <header >
-       
-  
-  <!--     
-        <div style=" display: inline;direction: ltr;display: flexbox; text-align: left;
-        margin: 10px 10px 4px 10px ;">
-      -->
-        <div style="display: flexbox; ">
-      <img src="images/OIP.png" alt="sharif" style="width: auto;cursor:pointer;display: inline-block; position: fixed;z-index: 1;
-      padding-left: 5px; padding-top: 10px;" 
-      id="toplogo">
-      
- 
-      
-      <div style="text-align: right;">
-        <a href="index.html" style="color: black;">
-        <h2 id="corpname" style="padding: 20px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180)); color: aliceblue;
-        font-size: 38px;font-family: boldedde;">
-            Sharif University of Technology
-            
-          </h2>
-     
-        </a>
-     
-        
+    <h1>فرم ثبت اطلاعات برای ثبت نام در کنگره مهندسی عمران</h1>
+    <h2>شرکت 
+      <span style="color: #3dcff3;"> کامپوزیت </span>
+      مکرر
+      </h2>
+    <p class="subtitle">پر کردن تمام فیلدهای ستاره‌دار الزامی است.</p>
+
+    <form id="userForm" name="userForm" novalidate>
+
+      <div class="form-grid">
+
+        <!-- نام و نام خانوادگی -->
+        <div class="full">
+          <label for="fullName">نام و نام خانوادگی <span class="req">*</span></label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="مثال: علی محمدی"
+            autocomplete="name"
+            required>
+        </div>
+
+        <!-- کد ملی -->
+        <div>
+          <label for="nationalId">کد ملی <span class="req">*</span></label>
+          <input
+            type="text"
+            id="nationalId"
+            name="nationalId"
+            placeholder="۱۰ رقم، مثال: 0012345678"
+            inputmode="numeric"
+            maxlength="11"
+            pattern="[0-9]{10}"
+            autocomplete="off"
+            required>
+        </div>
+
+        <!-- شماره تماس -->
+        <div>
+          <label for="phone">شماره تماس <span class="req">*</span></label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="مثال: 09123456789"
+            inputmode="numeric"
+            maxlength="11"
+            pattern="09[0-9]{9}"
+            autocomplete="tel"
+            required>
+        </div>
+
+        <!-- رشته -->
+        <div class="full">
+          <label for="fieldOfStudy"> رشته و تخصص شما <span class="req">*</span></label>
+          <input
+            type="text"
+            id="fieldOfStudy"
+            name="fieldOfStudy"
+            placeholder="مثال:  سازه / ژئوتکنیک"
+            required>
+        </div>
+
+        <!-- گروه -->
+        <div class="full">
+          <label for="userGroup">شامل کدام گروه می‌باشید؟ <span class="req">*</span></label>
+          <select id="userGroup" name="userGroup" required>
+            <option value="" selected disabled>— لطفاً انتخاب کنید —</option>
+            <option value="دانشجو">دانشجو</option>
+            <option value="هیئت علمی">هیئت علمی</option>
+            <option value=" بخش خصوصی">بخش خصوصی</option>
+            <option value=" بخش دولتی ">  بخش دولتی  </option>
+            <option value="سایر">سایر</option>
+          </select>
+        </div>
+
+        <!-- لوگو -->
+        <!-- سازمان -->
+        <div class="full">
+          <label for="organ"> وابستگی سازمانی <span class="req">*</span></label>
+          <input
+            type="text"
+            id="organ"
+            name="organ"
+            placeholder="مثال:  دانشگاه صنعتی شریف / وزارت راه و شهر سازی ..."
+            required>
+        </div>
+
+
       </div>
 
+      <button type="submit" id="submitBtn">تأیید و ارسال</button>
+    </form>
+
+    <div id="message" role="status" aria-live="polite"></div>
+  </div>
+
+  <script>
+    /* ==========================================================
+       ۱) آدرس Web App گوگل‌اسکریپت را اینجا قرار دهید
+       ========================================================== */
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyZ7Ghs3Kst3cma0RHWG_nKHG-osqJmOo3QsVO6dIza0tKVdNLvhLRPH6C6iBl3dnaR9A/exec';
+
+
+    /* ---------- عناصر ---------- */
+    const form           = document.getElementById('userForm');
+    const messageDiv     = document.getElementById('message');
+    const submitBtn      = document.getElementById('submitBtn');
+
+
+    let isLocked     = false;   // قفل ارسال
+    let countdownTimer = null;
+
+    /* ==========================================================
+       ۲) توابع کمکی نمایش پیام
+       ========================================================== */
+    function showError(text, el) {
+      messageDiv.className = 'error';
+      messageDiv.textContent = '❌ ' + text;
+      if (el) {
+        el.classList.add('invalid');
+        el.focus();
+      }
+    }
+
+    function showSuccess(text) {
+      messageDiv.className = 'success';
+      messageDiv.textContent = '✅ ' + text;
+    }
+
+    function clearMessage() {
+      messageDiv.className = '';
+      messageDiv.textContent = '';
+      form.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+    }
+
+    /* ==========================================================
+       ۳) تبدیل و کوچک‌سازی تصویر لوگو به Base64
+       ========================================================== */
+    function fileToResizedDataURL(file, maxSize = 200, quality = 0.8) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onerror = () => reject(new Error('خطا در خواندن فایل لوگو'));
+        reader.onload = () => {
+          const img = new Image();
+
+          img.onerror = () => reject(new Error('فایل انتخاب‌شده تصویر معتبری نیست'));
+          img.onload = () => {
+            let { width, height } = img;
+
+            if (width >= height && width > maxSize) {
+              height = Math.round(height * maxSize / width);
+              width  = maxSize;
+            } else if (height > maxSize) {
+              width  = Math.round(width * maxSize / height);
+              height = maxSize;
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width  = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';                 // پس‌زمینه سفید برای خروجی JPEG
+            ctx.fillRect(0, 0, width, height);
+            ctx.drawImage(img, 0, 0, width, height);
+
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+
+          img.src = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
+
+
+
+    /* ==========================================================
+       ۴) مدیریت قفل و شمارش معکوس ۵ ثانیه‌ای
+       ========================================================== */
+    function unlockForm() {
+      isLocked = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'تأیید و ارسال';
+    }
+
  
-  
-    <div class="overnav" style="padding:10px;direction: rtl;padding-right:5px;background: linear-gradient(to left,rgb(41, 124, 240),rgb(38, 228, 180));color: aliceblue;
-    font-size: 30px;padding-right:20px ;padding-bottom:14px ;">
-      Department of Civil Engineering
-  
-  </div>
-  <div class="overnav">
-    
-  </div>
-  
-  
-  
-     
-  </div>  
-            
-  
-  
-  <script type="text/javascript"> 
 
-var offsets = document.querySelector("body").getBoundingClientRect();
-    var userview = offsets.top;
-    var pageweidth =offsets.width;
+    /* ---------- ریست کامل فرم ---------- */
+    function resetForm() {
+      form.reset();
+
+      form.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+    }
+
+    /* ==========================================================
+       ۵) اعتبارسنجی و ارسال
+       ========================================================== */
+    const PERSIAN_NAME_REGEX = /^[\u0600-\u06FF\u200c\s]{3,}$/;  // حروف فارسی + فاصله + نیم‌فاصله
+    const NATIONAL_ID_REGEX  = /^[0-9]{10}$/;                    // دقیقاً ۱۰ رقم
+    const PHONE_REGEX        = /^09[0-9]{9}$/;                   // ۱۱ رقم و شروع با 09
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (isLocked) return;      // جلوگیری از ارسال مجدد
+
+      clearMessage();
+
+      const fullName     = form.fullName.value.trim();
+      const nationalId   = form.nationalId.value.trim();
+      const phone        = form.phone.value.trim();
+      const fieldOfStudy = form.fieldOfStudy.value.trim();
+      const userGroup    = form.userGroup.value;
+      const organ        = form.organ.value.trim();
 
 
-if (pageweidth<700) {
+      /* --- اعتبارسنجی --- */
+      if (!fullName) {
+        return showError('لطفاً نام و نام خانوادگی را وارد کنید.', form.fullName);
+      }
+      if (!PERSIAN_NAME_REGEX.test(fullName)) {
+        return showError('نام و نام خانوادگی باید فقط با حروف فارسی و حداقل ۳ حرف نوشته شود.', form.fullName);
+      }
+      if (!NATIONAL_ID_REGEX.test(nationalId)) {
+        return showError('کد ملی باید دقیقاً یک عدد ۱۰ رقمی باشد.', form.nationalId);
+      }
+      if (!PHONE_REGEX.test(phone)) {
+        return showError('شماره تماس باید ۱۱ رقمی و با 09 شروع شود. مثال: 09123456789', form.phone);
+      }
+      if (fieldOfStudy.length < 2) {
+        return showError('لطفاً رشته خود را وارد کنید (حداقل ۲ حرف).', form.fieldOfStudy);
+      }
+      if (organ.length < 2) {
+        return showError('لطفاً سازمان خود را وارد کنید (حداقل ۲ حرف).', form.organ);
+      }
 
-  
-document.getElementById('corpname').textContent="Sharif University";
-document.getElementsByClassName('overnav')[0].textContent="Civil Engineering";
 
-}
+      if (!userGroup) {
+        return showError('لطفاً مشخص کنید شامل کدام گروه می‌باشید.', form.userGroup);
+      }
 
+      /* --- آماده‌سازی داده‌ها برای گوگل‌شیت --- */
+      const data = new URLSearchParams();
+      data.append('fullName',     fullName);      // نام و نام خانوادگی
+      data.append('nationalId',   nationalId);    // کد ملی
+      data.append('phone',        phone);         // شماره تماس
+      data.append('fieldOfStudy', fieldOfStudy);  // رشته
+      data.append('organ', organ);  // رشته
+      data.append('userGroup',    userGroup);     // گروه
+
+      /* --- قفل کردن دکمه قبل از ارسال --- */
+      isLocked = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'در حال ارسال...';
+
+      try {
+        await fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',          // جلوگیری از خطای CORS در گوگل‌اسکریپت
+          body: data
+        });
+
+        // چون mode = no-cors است، پاسخ قابل خواندن نیست و ارسال موفق فرض می‌شود
+        showSuccess('اطلاعات با موفقیت ثبت شد. با تشکر!');
+        resetForm();
+
+      } catch (error) {
+        showError('خطا در ارسال اطلاعات: ' + error.message);
+        unlockForm();               // در صورت خطا کاربر می‌تواند بلافاصله دوباره تلاش کند
+      }
+    });
+
+    /* ---------- حذف حالت خطا هنگام تایپ ---------- */
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      el.addEventListener('input', () => {
+        el.classList.remove('invalid');
+      });
+      el.addEventListener('change', () => {
+        el.classList.remove('invalid');
+      });
+    });
   </script>
-  
-  
-    
-  
-   <script type="text/javascript">
-  
-    function down(){
-
-
-      
-
-        let m=document.getElementsByClassName('navbut');
-
-        for (let index = 0; index < m.length; index++) {
-        m[index][0].selected='true';
-        
-    }
-
-
-
-
-    var offsets = document.getElementById('navigation').getBoundingClientRect();
-    var top = offsets.top;
-    var offsets = document.querySelector("body").getBoundingClientRect();
-    var userview = offsets.top;
-    var pageweidth =offsets.width;
-
-    if(top < 3 & pageweidth>560){
-      
-      document.getElementById('corpname').style.display="none";
-      document.getElementsByClassName('overnav')[0].style.display="none";
-      document.getElementsByClassName('overnav')[1].style.display="none";
-      document.getElementById('mainnavcontiner').style.position="fixed";
-      
-
-    }
-    if(userview > -10  & pageweidth>560){
-  
-   document.getElementById('corpname').style.display="block";
-   document.getElementsByClassName('overnav')[0].style.display="block";
-   document.getElementsByClassName('overnav')[1].style.display="block";
-  
-  document.getElementById('navigation').style.position="relative";
-  document.getElementById('mainnavcontiner').style.position="relative";  
-  document.getElementById('navborder').style.zIndex="42";
-  
-  }
-  
-  
-  if(userview > -130  & pageweidth>560 &  document.getElementsByClassName('overnav')[0].style.display=="block"  ){
-  
-  let a=130+userview*0.4;
-  document.getElementById('toplogo').style.height =a+'px';
-  
-  
-  }else{ 
-    document.getElementById('toplogo').style.height =75+'px';
-  }
-
-
-
-
-    }
-
-    </script>
-  
-  <div  class="navcontainer" style="background-color: white;">
-   
-  
-  
-  <div style="height: 90px;background: rgb(255, 255, 255);width: 100%; "  class="navcontainer" id="mainnavcontiner">
-    
-  
-  <div style="background-color: rgb(255, 255, 255);direction: rtl;" id="minimenue">
-    <img style="cursor: pointer;" onclick="openmenue()" width="48" height="48" src="https://img.icons8.com/color/48/menu--v1.png" alt="menu--v1"/>
-  </div>
-  
-   <nav id="navigation">
-    
-
-  <div  style="height: 75px;padding-top:0px;padding-bottom:0px;width: 0px;" id="removeonphone">
-     
-    
-  </div>
-
-
-   
-    <!-- Navigation button -->
-    <button class="nav-button" style="z-index:71;">
-      Courses
-      <!-- Dropdown menu -->
-      <div class="dropdown-menu" style="z-index: 171;">
-        <a href="http://ocw.sharif.edu/course/id/156/%D9%85%DA%A9%D8%A7%D9%86%DB%8C%DA%A9-%D8%B3%DB%8C%D8%A7%D9%84%D8%A7%D8%AA-1.html" style="z-index: 71;"> Fluid Mechanics</a>
-        <a href="http://ocw.sharif.edu/course/id/122/%D9%85%DB%8C%D8%B1%D9%85%D8%B5%D8%AF%D9%82-%D8%AC%D9%85%D8%A7%D9%84%DB%8C-/%D9%87%DB%8C%D8%AF%D8%B1%D9%88%D9%84%DB%8C%DA%A9.html" style="z-index: 71;"> Hydraulics</a>
-        <a href="http://ocw.sharif.edu/course/id/121/%D9%85%DB%8C%D8%B1%D9%85%D8%B5%D8%AF%D9%82-%D8%AC%D9%85%D8%A7%D9%84%DB%8C-/%D9%87%DB%8C%D8%AF%D8%B1%D9%88%D8%AF%DB%8C%D9%86%D8%A7%D9%85%DB%8C%DA%A9-%D9%85%D8%AD%DB%8C%D8%B7-%D8%B2%DB%8C%D8%B3%D8%AA.html" style="z-index: 71;"> Environmental Hydrodynamics </a>
-        <a href="https://maktabkhooneh.org/course/%D8%AE%D9%84%D8%A7%D9%82%DB%8C%D8%AA-%D9%86%D9%88%D8%A2%D9%88%D8%B1%DB%8C-%D9%85%D9%87%D9%86%D8%AF%D8%B3%DB%8C-mk550/" style="z-index: 71;"> Creativity and Innovation in Engineering</a>
-
-      </div>
-    </button>
-
-
-
-<button class="nav-button" style="z-index:71;">
-    <a href="#GraduateStudents" style="color: unset; padding:20px 20px;display: inline-block;">  Graduate Students </a>
-    </button>
-    
-
-
- <button class="nav-button" style="z-index:71;">
-      publication
-      <!-- Dropdown menu -->
-      <div class="dropdown-menu" style="z-index: 171;">
-        <a href="#InternationalJournalPapers" style="z-index: 71;"> International Journal Papers </a>
-        <a href="#SelectedInternationalConferencePapers" style="z-index: 71;"> Conference Papers</a>
-
-
-
-       <div class="sobnav-button " >Research And Studies 
-
-        <div href="publication/research.html" style="z-index: 71;" class="subdropdown"> 
-
-        <a href="./publication/research.html" style="z-index: 71;"> selective withdrawal </a>
-        <a href="#SelectedInternationalConferencePapers" style="z-index: 71;"> R1</a>
-
-      </div>
-
-    </div>
-    </button>
-
- 
-  
-   
-  
-  
-  
-  
-  </nav>
-  
-  
-     
-  <div id="navborder"
-  style="height: 5px;background:linear-gradient(to right ,rgba(20, 205, 97, 0.963),rgba(43, 94, 205, 0.985));z-index: 1;width: 100%;">
-  
-  </div>
-     
-  </div>
-  
-  
-   
-  
-  
-  </header>
-  
-  
-
-   <main>
-      
-  <div id="parta">
-    
-      <div class="noneimportant , noneimportant2">
-       <img src="images/personalimage.jpg">
-
-   <!--  <div style="margin-bottom: 20px;" ><h2 style="text-align: center; ">contacts</h2></div>-->  
-<div style="margin-left: 20%;text-align: left;margin-right: 10%;">
-
-       <div style="padding: 10px;border-radius: 0;margin-top: 30px;"><b>EMAIL</b></div>
-      <div style="margin-bottom: 14px;">
-      <a href="mailto:jamali@sharif.edu" style="margin-bottom: 8px;color: blue;">jamali[at]sharif.edu</a>
-      </div>
-
-      <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>ADDRESS</b></div>
-      <div style="margin-bottom: 14px;" class="appeartextwhite">
-       Dr. Mirmosadegh Jamali, P. Eng.
-
-       Department of Civil Engineering
-       
-       Sharif University of Technology
-       
-       Azadi Avenue
-       
-       Tehran, Iran
-      </div>
-
-      <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>TELEPHONE</b></div>
-      <div style="margin-bottom: 14px;">
-      <a href="callto:+98 021 6616 4215" style="margin-bottom: 8px;color: blue;cursor: pointer;">+98 (21) 6616-4215</a>
-      </div>
-
-      <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>OFFICE</b></div>
-      <div style="margin-bottom: 14px;" class="appeartextwhite">
-       411 in  Civil Engineering Department
-            </div>
-
-      <div style="padding: 10px; border-top:1px solid rgb(48, 226, 246) ;border-radius: 0;"><b>ASSISTANT</b></div>
-      <div style="margin-bottom: 14px;">
-      <a href="mailto:aliseper2002" style="margin-bottom: 8px;" class="appeartextwhite">Ali M. Sepehr</a>
-      </div>
-
-    </div>
-      
-
-       
-      
-
-
-
-      
-        </div>
-        
-        
-
-    
-     
-      <div class="noneimportant" >
-       
-<div style="text-align: left;">
-  <div style="padding:2% 0%;"><h1 style="text-align: left;color: rgb(31, 52, 142);font-family: boldedde;" id="maintitle">Dr. Mirmosadegh Jamali</h1></div>
-  <b style="font-size: larger;">
-  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
-   Professor (On leave)
-  </div>
-  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
-   Civil Engineering Department, Sharif University of Technology
-  </div>
-  <div style="padding:0.5% 0% ;font-family: bnazitalic; ">
-  Water &   Environmental Engineering
- </div>
-</b>
-
-
-
-   <h1 style="margin-top:7px ;margin-bottom:9px ;text-align: left;">Research Interests</h1>
-   <p  style=" border-radius:0px; line-height: 135%;" id="researchint">
-       Environmental Fluid Mechanics (stratified flows, mixing in surface waters, lake dynamics)
-   
-   Numerical Methods in Engineering (finite element method, boundary element method, finite difference method)
-   
-   Hydraulics (sediment transport, vegetated flows)
-   
-   Coastal and Ocean Engineering (wave hydrodynamics, off-shore structures, coastal sediment transport, numerical modeling)
-   
-   Thin-walled Structures
-   </p>
-
-</div>
-
-       <h2 style="margin-top: 5%;text-align: left;margin-bottom: 2%;">Journal Review</h2>
-<div style="text-align: left;padding-left: 2%;padding-top: 5px;">
-       <li>
-           Journal of Fluid Mechanics
-       </li>
-       
-       
-       
-       <li>
-           Physics of Fluids
-       
-       
-       </li>
-       
-       
-       
-       <li>
-           Journal of Hydraulic Engineering, ASCE
-       
-           
-       </li>
-       
-       
-       
-       <li>
-           Canadian Journal of Civil Engineers
-       
-       
-       </li>
-       
-       
-       <li>
-           International Journal for Numerical Methods in Fluids
-       
-           
-       </li>
-       
-       <li>
-           Advances in Water Resources
-       
-       
-       </li>
-       
-       <li>
-           Journal of Coastal research
-       
-       
-       
-       </li>
-       
-       <li>
-       
-           Journal of Hydro-Environment
-       
-       
-       </li>
-       
-       </div>
-
-
-       <div style="margin-top: 5%;">
-
-        <h3 style="display: grid;place-content: center;">Educational Background</h3>
-
-        <div class="partb" style="border-radius: 0%;">
-          
-          <div style="background-color: rgb(255, 255, 255);height: auto;" class="row">
-            <div style="background-color:white;">
-        Degree
-            </div>
-            
-            <div style="border-radius: 0%;">
-            Date
-            </div>
-            <div style="border-radius: 0%;">
-         _
-            </div>  
-          </div> 
-        
-        
-            <div style="background-color: white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-          
-        Ph.D.
-              </div>
-              
-              <div style="border-radius: 0%;">
-                1993 - 1998
-              </div>
-              <div style="border-radius: 0%;">
-                Civil Engineering, The University of British Columbia, Vancouver, Canada
-              </div>  
-            </div>  
-        
-              
-        <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-                M.Sc.
-              </div>
-              
-              <div style="border-radius: 0%;">
-                1997 - 2000
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-                Applied Mathematics, The University of British Columbia, Vancouver, Canada
-        
-        
-              </div>  
-            </div>  
-        
-        
-            <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-                M.A.Sc.
-              </div>
-              
-              <div style="background-color:white;border-radius: 0%;">	
-              1987 - 1990
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-                Structural Engineering, Sharif University of Technology, Tehran, Iran
-              </div>  
-            </div>  
-        
-            <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="background-color:white;border-radius: 0%;">
-                B.A.Sc.
-              </div>
-              
-              <div style="border-radius: 0%;">
-                1983 - 1987
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-                Civil Engineering, Sharif University of Technology, Tehran, Iran
-        
-        
-              </div> 
-
-
-
-
-              
-              
-              
-            </div>  
-        </div>
-
-
-       </div>
-
-
-       <div style="margin-top: 5%;">
-
-        <h3 style="display: grid;place-content: center;">Academic Background</h3>
-
-        <div class="partb" style="border-radius: 0%;">
-          
-          <div style="background-color: rgb(255, 255, 255);height: auto;" class="row">
-            <div style="background-color:white;">
-        position
-            </div>
-            
-            <div style="border-radius: 0%;">
-            Date
-            </div>
-            <div style="border-radius: 0%;">
-         Department
-            </div>  
-          </div> 
-        
-        
-            <div style="background-color: white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-          
-        Faculty Member
-              </div>
-              
-              <div style="border-radius: 0%;">
-1999-present
-
-</div>
-              <div style="border-radius: 0%;">
-                Department of Civil Engineering, Sharif University of Technology, Tehran, Iran
-              </div>  
-            </div>  
-        
-              
-        <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-                Visiting Associate Professor
-              </div>
-              
-              <div style="border-radius: 0%;">
-                2006
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-Department of Civil Engineering, MIT, USA      
-        
-              </div>  
-            </div>  
-        
-        
-            <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="border-radius: 0%;">
-                Visiting Associate Professor
-              </div>
-              
-              <div style="background-color:white;border-radius: 0%;">	
-              Summer 2004
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-Department of Civil Engineering, The University of British Columbia, Vancouver, Canada
-              </div>  
-            </div>  
-        
-            <div style="background-color:white;height: auto;border-radius: 0%;" class="row">
-              <div style="background-color:white;border-radius: 0%;">
-                Visiting Assistant Professor
-              </div>
-              
-              <div style="border-radius: 0%;">
-                Summer 2003
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-Department of Mathematics, The University of British Columbia, Vancouver, Canada        
-        
-              </div> 
-
-
-                <div style="background-color:white;border-radius: 0%;">
-Visiting Assistant Professor
-              </div>
-              
-              <div style="border-radius: 0%;">
-                Summer 2002
-              </div>
-              <div style="background-color:white;border-radius: 0%;">
-Department of Mathematics, The University of British Columbia, Vancouver, Canada        
-        
-              </div> 
-
-              
-
-
-
-
-              
-              
-              
-            </div>  
-        </div>
-
-
-       </div>
-
-
-
-
-
-      </div>
-     
-      
-
-      
-      
-</div>
-
-
-
-
-
-
-   
-
-
-<section style="margin: 3% 3%;padding: 2%;border-radius: 3%;">
-
-  <div id="minimmmmm" style="background-color: white;">
-
-  </div>
-
-  <h2 style="direction: ltr;left: 0%;margin-left: 4%;padding-top: 3%;display: block;margin-left:0% ;
-  background-color: rgb(255, 255, 255);display: grid;place-content: left;padding-bottom: 4%;" id="InternationalJournalPapers"> International Journal Papers</h2>
-  
-  <li>
-    Jamali, M., Seymour, B., and Lawrence, G.  (2003) "Asymptotic analysis of a surface-internal wave interaction", Physics of Fluids, V 15, p 47.
-
-  </li>
-  
-  <li>
-    Jamali, M., Lawrence, G., and Seymour, B. (2003) "A note on the resonant interaction between surface and interfacial waves, " Journal of Fluid Mechanics, V 491, p 1.
-
-
-  </li>
-  
-  <li>
-    Jamali, M. (2003) "Topographic effects on establishment of selective withdrawal," Physics of Fluids, V 15, p 3665.
-
-  
-  </li>
-  
-  <li>
-    Jamali, M., and Seymour , B. (2004) "Surface wave interaction with internal waves on a diffuse interface," Journal of Physical Oceanography, V 34, n 12, p 204.
-
-  
-  </li>
-  
-  <li>
-    Jamali, M., Lawrence, G., and Maloney, K. (2005) "Dispersion in varying-geometry rivers with application to methanol releases," Journal of Hydraulic Engineering, ASCE, V 131, n 5, p 390.
-
-
-
-  </li>
-  
-  <li>
-    Jamali, M., Seymour, B., and Kassaian, R. (2005) "Numerical and experimental study of flow of a stratified fluid over a sill towards a sink," Physics of Fluids, V 17, p 057106.
-
-  
-  </li>
-  
-  <li>
-    Jamali, M. (2006) "BEM modeling of surface water wave motion with laminar boundary layers," Engineering Analysis with Boundary Elements, V 30, p 14.
-
-
-  </li>
-  
-  <li>
-    Jamali, M. (2006) "A coupled boundary element-finite difference model of surface wave motion over a wall turbulent flow," International Journal for Numerical Methods in Fluids, V 51, p 371.
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M. and Lawrence , G. ( 2006) "Viscous wave interaction due to motion of a surface wave over a sediment bed," Journal of Offshore Mechanics and Arctic Engineering, ASME, V 128, p 276.
-
-
-  
-  </li>
-  
-  <li>
-    Jamali, M. and Aghsaee, P. (2007) "Effect of a contraction on selective withdrawal of a linearly stratified fluid from a line sink," Physics of Fluids, V 19, 106602.
-
-  
-  
-  </li>
-  
-  <li>
-    Lawrence, G., Jamali, M., and Maloney, K. (2007) Closure of "dispersion in varying-geometry rivers with application to Mathanol releases," Journal of Hydraulic Engineering, ASCE, V 133, n 9, p 1094.
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M., Nepf, H., and Zhang, X. (2008) "Exchange flow between a canopy and open water," Journal of Fluid Mechanics, V 611, p 237.
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M. and Haddazadegan, H. (2010) "Effects of a sill on selective withdrawal through a point sink in a linearly stratified fluid," Advances in Water Resources, V 33, p 1517.
-
-  
-  
-  </li>
-  <li>
-    Jamali, M. and Seymour, B. (2011) Comment on "Method to derive the differential equation of the free surface boundary," by Chen et al, Groundwater, V 49, p 133.
-
-  
-  
-  </li>
-  
-  <li>
-    Fazeli, M. and Jamali, M. (2012) "Evolution of sub-harmonic interfacial waves generated by a surface wave in three-wave interaction," Scientia Iranica, V 19, p 225.
-
-
-  </li>
-
-  <li>
-    Tahvildari, N. and Jamali, M. (2012) “Cubic nonlinear analysis of interaction between a surface wave and two interfacial waves in an open two-layer fluid,” Fluid Dynamics Research, V 44, n5.
-
-  
-  </li>
-
-  <li>
-    Jamali, M. (2013) “Non-hydrostatic layered flows over a sill,” Fluid Dynamics Research, V 45, n 2.
-
-  
-  </li>
-
-  <li>
-    Marjani, A.A. and Jamali, M. (2014) “Role of exchange flow in salt/water balance of a saline lake,” Dynamics of Atmospheres and Oceans, V 65, pp. 1-16.
-
-  
-  </li>
-
-  <li>
-    Tofighi, M. A. and Jamali, M. (2014), “Dispersion around circular cylinder in surface wave motion,” Scientia Iranica, 21(3), 548-556.
-
-  
-  </li>
-
-  <li>
-    Safaie, A., Fazeli, M. and Jamali, M. (2014) “A technique for detection of interfacial waves forming a two-dimensional pattern,” Fluid Dynamics Research, V46.
-
-  
-  </li>
-  Fazeli, M., Jamali, M., Lawrence, G., and Seymour, B. (2015) “Growth and damping of interfacial waves on a diffuse interface,” Environmental Fluid Mechanics,  V. 15,
-
-
-  <li>
-    Fazeli, M., Safaie, A., and Jamali, M (2017) “Identification of evolving interfacial waves by spatial harmonic analysis,” Environmental Fluid Mechanics, V. 17, 647–664.
-
-  
-  </li>
-
-  <li>
-    Baghbadorani, D, Ataie-Ashtiani B., Beheshti, A., Hadjzaman M., and Jamali, M. (2018) ”Prediction of current-induced local scour around complex piers: Review, revisit, and integration,” Coastal Engineering, V 133, pp. 43-58.
-
-  
-  </li>
-
-  <li>
-    Jamali, M., Davari, H., and Shoaei, F. (2019) “Lateral dispersion in deflected emergent aquatic canopies,” Environmental Fluid Mechanics, V. 19, 833-850.
-
-  
-  </li>
-
-  <li>
-    Jamali, M., Behzadi, S., Safaie, A., and Fazeli, M. (2020), “Experimental and theoretical investigation of cubic stabilization of instability of an interface in surface wave motion,” Physics of Fluids V. 32, issue 2, DOI: 10.1063/1.5128749
-
-  
-  </li>
-  
-</section>
-
-<div  id="SelectedInternationalConferencePapers"></div>
-<section style="margin: 3% 3%;padding: 2%;border-radius: 3%;">
-
-  <div id="minimmmmm" style="background-color: white;">
-
-  </div>
-
-  <h2 style="direction: ltr;left: 0%;margin-left: 4%;padding-top: 3%;display: block;margin-left:0% ;
-  background-color: rgb(255, 255, 255);display: grid;place-content: left;padding-bottom: 4%;"> Selected International Conference Papers</h2>
-  
-  <li>
-    Modjtahedi, Dj. and Jamali, M. (1990) "BEM with Fundamental Sources placed on an Imaginary Boundary", Proceedings of 12th International Conference on Boundary Elements in Engineering held at Hokaido University, Sapporo,   Japan, Vol. 1, p 111-121, Springer-Verlag.
-
-
-  </li>
-  
-  <li>
-    Jamali, M. (1997) "Excitation of internal waves by a surface wave", Proceedings of XXVIIth Conference of IAHR, San Francisco, p 1334.
-
-
-  </li>
-  
-  <li>
-    Jamali, M. and Seymour , B. (2000) "Surface wave interaction with internal waves on a diffuse interface," Proc. 5th Int. Symp. Stratified Flows, Vancouver , Canada , p. 785.
-
-  
-  </li>
-  
-  <li>
-    Jamali, M., Lawrence , G., and Quick, M. (2000) "Generation of oblique internal waves by a surface wave,", Proc. 5th Int. Symp. Stratified Flows, Vancouver , Canada , p. 779.
-
-
-    
-  </li>
-  
-  <li>
-    Jamali, M., Lawrence, G, and Maloney, K. (2002) "Dispersion and fate of methanol spills into rivers," Proc. CSCE-ASCE Joint Environmental Engineering Conference, Niagara Falls, Canada.
-
-
-  </li>
-  
-  <li>
-    Shaaban, S., and Jamali, M. (2003) "Numerical Study of effects of a sill on selective withdrawal," Proc. XXX IAHR Congress , Greece .
-
-
-    
-  </li>
-  
-  <li>
-    Jamali, M. (2004) "BEM modeling of viscous motion of surface water waves," Proc. 23rd Int. Conf. Offshore Mech.& Arctic Eng. , ASME, Vancouver , Canada .
-
-
-  </li>
-  
-  <li>
-    Jamali, M., and Lawrence, G. (2004) "Viscous wave interaction due to motion of a surface wave over a sediment bed," Proc. 23rd Int. Conf. Offshore Mech.& Arctic Eng., ASME, Vancouver, Canada.
-
-  
-  
-  </li>
-  
-  <li>
-    Hasanzadeh, A., and Jamali,(2004) "Experimental study of scour due to breaking waves," Proc. 23rd Int. Conf. Offshore Mech. & Arctic Eng. , ASME, Vancouver , Canada .
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M., and Lawrence , G. (2004) "Effects of variable river geometry on longitudinal dispersion," Proc. Int. Symp. on Environmental Hydraulics, Hong Kong.
-
-  
-  
-  </li>
-  
-  <li>
-  
-    Kian R. and Jamali, M. (2009) "Establishment of selective withdrawal in a two-layer reservoir with a bottom sill," Proc. 33rd IAHR Congress, Vancouver, Canada.
-
-  
-  </li>
-  
-  <li>
-    Rahnamie Zekavat P. and Jamali, M. (2009) "Longitudinal dispersion of oil spills through vegetation due to exchange flow by differential heating", Proc. 33rd IAHR Congress, Vancouver, Canada.
-
-  
-  
-  </li>
-  
-  <li>
-    Jamali, M. and Marvi, S. (2009) "Partial-depth exchange flow between canopy and open water," Proc. 13th Workshop on Physical Processes in Natural Waters, Palermo, Italy
-
-  
-  
-  </li>
-  <li>
-    Ghazvini, S. and Jamali, M. (2010) "Effects of depth variation of vegetation on vertical mixing," IAHR Environmental Hydraulics, Greece.
-
-  
-  
-  </li>
-  
-  <li>
-    Fazeli, M. and Jamali, M. (2011) "Effects of a diffuse interface on nonlinear resonant interaction between surface and interfacial waves," 7th International Symposium on Stratified Flows, Rome, Italy.
-
-  
-  </li>
-  
-</section>
-
-
-
-
-<div id="adfhidhcjnjxjxz">
-</div>
-
-
-<h2 style="text-align: center; margin-bottom: 20px;" id="GraduateStudents"> Graduate Students</h2> 
-<section id="graduates"  style="padding:10px;" >
-   
-  <script  src="graduates.js"></script>
-
-
-</section>
-
-
-
-<h3 style="display: grid;place-content: center;padding: 15px;">Professional Affiliations</h3>
-
-<div id="partc">
-<div>
-
-  American Geophysical Union
-
-</div>
-
-<div style="text-align: center;">
-   International Association for Hydraulic Research
-
-</div>
-
-
-<div>
-
-
-  American Mathematical Society
-
-
-
-</div>
-
-<div>
-  Engineers & Geoscientists BC
-
-
-</div>
-
-<div>
-  Iranian Hydraulics Society
-
-
-</div>
-
-
-</div>
-  
-     
-
-  
-
-</main>
-
-
-<footer>
-     
-  <div>
-   
-     
-
-   
-
-   
-</div>
-
-      
-
- </footer>
- 
- <script  src="menu.js"></script>
- 
-   
-</div>
-
-
 </body>
-
- 
- 
-  
-
-
 </html>
