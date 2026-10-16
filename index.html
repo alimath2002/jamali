@@ -203,6 +203,8 @@
 
   <h1>با تشکر از زمانی که گذاشتید</h1>
 <p>فرم شما ثبت شد</p>
+<p>نتیجه از طریق پیامک یا ایمیل به اطلاع شما خواهد رسید باتشکر.</p>
+
 
 </div>
 </div>
@@ -273,7 +275,7 @@
             type="text"
             id="fieldOfStudy"
             name="fieldOfStudy"
-            placeholder="مثال:  سازه / ژئوتکنیک"
+            placeholder="مثال:  محیط زیست / ژئوتکنیک"
             required>
         </div>
 
@@ -302,8 +304,19 @@
             required>
         </div>
 
-
       </div>
+
+              <!-- ایمیل -->
+        <div class="full">
+          <label for="email">  ایمیل </label>
+          <input
+            type="text"
+            id="email"
+            name="organ"
+            placeholder="example@something.ex"
+            >
+        </div>
+
 
       <button type="submit" id="submitBtn">تأیید و ارسال</button>
     </form>
@@ -332,7 +345,7 @@
        ========================================================== */
     function showError(text, el) {
       messageDiv.className = 'error';
-      messageDiv.textContent = '❌ ' + text;
+      messageDiv.textContent = '❌' + text;
       if (el) {
         el.classList.add('invalid');
         el.focus();
@@ -418,6 +431,7 @@
     const PERSIAN_NAME_REGEX = /^[\u0600-\u06FF\u200c\s]{3,}$/;  // حروف فارسی + فاصله + نیم‌فاصله
     const NATIONAL_ID_REGEX  = /^[0-9]{10}$/;                    // دقیقاً ۱۰ رقم
     const PHONE_REGEX        = /^09[0-9]{9}$/;                   // ۱۱ رقم و شروع با 09
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -428,6 +442,7 @@
 
       const fullName     = form.fullName.value;
       const nationalId   = form.nationalId.value;
+      const email=forms.email.value;
       const phone        = form.phone.value;
       const fieldOfStudy = form.fieldOfStudy.value;
       const userGroup    = form.userGroup.value;
@@ -444,6 +459,13 @@
       if (!NATIONAL_ID_REGEX.test(nationalId)) {
         return showError('کد ملی باید دقیقاً یک عدد ۱۰ رقمی باشد.\n از کیبورد انگلیسی استفاده کنید', form.nationalId);
       }
+
+      if (!emailRegex.test(email)) {
+        return showError('ایمیل معتبر نمی باشد\n از کیبورد انگلیسی استفاده کنید', form.nationalId);
+      }
+
+
+
       if (!PHONE_REGEX.test(phone)) {
         return showError('شماره تماس باید ۱۱ رقمی و با 09 شروع شود. مثال: 09123456789', form.phone);
       }
@@ -464,6 +486,7 @@
       data.append('fullName',     fullName);      // نام و نام خانوادگی
       data.append('nationalId',   nationalId);    // کد ملی
       data.append('phone',        phone);         // شماره تماس
+      data.append('email',email)
       data.append('fieldOfStudy', fieldOfStudy);  // رشته
       data.append('organ', organ);  // رشته
       data.append('userGroup',    userGroup);     // گروه
