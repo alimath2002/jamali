@@ -215,11 +215,12 @@
 <picture><img src="./statics/logocm01.png" alt="MOKARRAR LOGO"></picture>
     </div>
     
-    <h1>فرم ثبت اطلاعات برای ثبت نام در کنگره مهندسی عمران</h1>
+    <h1>فرم ثبت اطلاعات برای ثبت نام در کارگاه تخصصی کنگره مهندسی عمران</h1>
     <h2>شرکت 
       <span style="color: #3dcff3;"> کامپوزیت </span>
       مکرر
       </h2>
+      <h3>توجه: این فرم برای ثبت</h3>
     <p class="subtitle">پر کردن تمام فیلدهای ستاره‌دار الزامی است.</p>
 
     <form id="userForm" name="userForm" novalidate>
@@ -240,7 +241,7 @@
 
         <!-- کد ملی -->
         <div>
-          <label for="nationalId">کد ملی <span class="req">* </span><span class="more_info" title="برای صدور کارت و مجوز ها"> ℹ️</span></label>
+          <label for="nationalId">کد ملی <span class="more_info" title="برای صدور کارت و مجوز ها"> ℹ️</span></label>
           <input
             type="text"
             id="nationalId"
@@ -250,7 +251,7 @@
             maxlength="11"
             pattern="[0-9]{10}"
             autocomplete="off"
-            required>
+            >
         </div>
 
         <!-- شماره تماس -->
@@ -286,8 +287,8 @@
             <option value="" selected disabled>— لطفاً انتخاب کنید —</option>
             <option value="دانشجو">دانشجو</option>
             <option value="هیئت علمی">هیئت علمی</option>
-            <option value=" بخش خصوصی">بخش خصوصی</option>
-            <option value=" بخش دولتی ">  بخش دولتی  </option>
+            <option value="بخش خصوصی">بخش خصوصی</option>
+            <option value="بخش دولتی">  بخش دولتی  </option>
             <option value="سایر">سایر</option>
           </select>
         </div>
@@ -325,6 +326,8 @@
   </div>
 
   <script>
+// const fields=['معدن','سازه',را]
+
     /* ==========================================================
        ۱) آدرس Web App گوگل‌اسکریپت را اینجا قرار دهید
        ========================================================== */
@@ -456,7 +459,7 @@
       if (!PERSIAN_NAME_REGEX.test(fullName)) {
         return showError('نام و نام خانوادگی باید فقط با حروف فارسی و حداقل ۳ حرف نوشته شود.', form.fullName);
       }
-      if (!NATIONAL_ID_REGEX.test(nationalId)) {
+      if ( nationalId && !NATIONAL_ID_REGEX.test(nationalId)) {
         return showError('کد ملی باید دقیقاً یک عدد ۱۰ رقمی باشد.\n از کیبورد انگلیسی استفاده کنید', form.nationalId);
       }
 
@@ -484,7 +487,7 @@
       /* --- آماده‌سازی داده‌ها برای گوگل‌شیت --- */
       const data = new URLSearchParams();
       data.append('fullName',     fullName);      // نام و نام خانوادگی
-      data.append('nationalId',   nationalId);    // کد ملی
+      data.append('nationalId',   nationalId || '0012345678');    // کد ملی
       data.append('phone',        phone);         // شماره تماس
       data.append('email',  email)
       data.append('fieldOfStudy', fieldOfStudy);  // رشته
