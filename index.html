@@ -1,544 +1,366 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>فرم ثبت اطلاعات کاربران</title>
-  <link rel="icon" type="image/png" href="./statics/R_logo.png">
-
-  <!--
-    ============================================================
-    فیلدهای فرم و هدرهای ارسالی به Google Sheet
-    ============================================================
-    name="fullName"      ->  ستون: نام و نام خانوادگی
-    name="nationalId"    ->  ستون: کد ملی
-    name="phone"         ->  ستون: شماره تماس
-    name="fieldOfStudy"  ->  ستون: رشته
-    name="userGroup"     ->  ستون: گروه
-    submittedAt          ->  ستون: تاریخ ثبت (در Apps Script اضافه می‌شود)
-    ============================================================
-  -->
-
-  <style>
-    * { box-sizing: border-box; }
-
-    html { -webkit-text-size-adjust: 100%; }
-
-    @font-face {
-  font-family: 'MyFont';
-  src: url('/fonts/Ravi-Regular.ttf') ;
-  font-weight: 400;
-  font-style: normal;
-}
-
-
-    body {
-        font-family: 'MyFont', sans-serif;
-
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #eef2f7 0%, #dfe7f1 100%);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: clamp(12px, 4vw, 40px) clamp(10px, 3vw, 24px);
-    }
-
-    .container {
-      width: 100%;
-      max-width: 620px;
-      background: #fff;
-      border-radius: 16px;
-      padding: clamp(18px, 4vw, 34px);
-      box-shadow: 0 10px 30px rgba(16, 24, 40, .12);
-    }
-
-    h2 {
-      margin: 0 0 6px;
-      text-align: center;
-      color: #1f2d3d;
-      
-      font-size: clamp(18px, 4.5vw, 23px);
-    }
-    h1 {
-      margin: 0 0 6px;
-      text-align: center;
-      color: #1f2d3d;
-      font-size: clamp(18px, 4.5vw, 23px);
-    }
-    .subtitle {
-      text-align: center;
-      color: #7b8794;
-      font-size: clamp(12px, 3vw, 13.5px);
-      margin: 0 0 22px;
-      line-height: 1.7;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0 16px;
-    }
-
-    @media (min-width: 560px) {
-      .form-grid { grid-template-columns: 1fr 1fr; }
-      .form-grid .full { grid-column: 1 / -1; }
-    }
-
-    label {
-      display: block;
-      margin-top: 16px;
-      font-weight: bold;
-      font-size: 14px;
-      color: #344054;
-    }
-
-    .req { color: #dc3545; margin-right: 3px; }
-
-    input[type="text"],
-    input[type="tel"],input[type="email"],
-    select,
-    textarea {
-      width: 100%;
-      margin-top: 6px;
-      padding: 12px 14px;
-      font-family: inherit;
-      font-size: 15px;
-      color: #1f2d3d;
-      background: #fbfcfe;
-      border: 1.5px solid #d5dbe3;
-      border-radius: 10px;
-      transition: border-color .2s, box-shadow .2s, background .2s;
-    }
-
-    textarea { resize: vertical; min-height: 90px; }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      background: #fff;
-      border-color: #28a745;
-      box-shadow: 0 0 0 3px rgba(40, 167, 69, .15);
-    }
-
-    input.invalid, select.invalid, textarea.invalid {
-      border-color: #dc3545;
-      box-shadow: 0 0 0 3px rgba(220, 53, 69, .12);
-    }
-
-    /* ---------- بخش لوگو ---------- */
-
-
-
-
-    /* ---------- دکمه ارسال ---------- */
-    #submitBtn {
-      width: 100%;
-      margin-top: 24px;
-      padding: 14px;
-      font-family: inherit;
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      background: #28a745;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background .2s, transform .1s;
-    }
-
-    #submitBtn:hover:not(:disabled) { background: #218838; }
-    #submitBtn:active:not(:disabled) { transform: scale(.99); }
-
-    #submitBtn:disabled {
-      background: #9bbfa6;
-      cursor: not-allowed;
-    }
-
-    /* ---------- پیام‌ها ---------- */
-    #message {
-      margin-top: 14px;
-      min-height: 22px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: bold;
-      line-height: 1.8;
-    }
-
-    #message.success { color: #1e7e34; }
-    #message.error   { color: #dc3545; }
-  </style>
-
-  <style>
-    .more_info{cursor: pointer;}
-    img{width: 60%;}
-    picture{direction: ltr;}
-    #overlayer{
-            display: flex;
-      display: none;
-      z-index: 999;
-      height: 100%;
-      background-color: #111a2561;
-      position:fixed;
-      margin: 0%;
-      width: 100%;
-      align-items: center;
-      text-align: center;
-      justify-content: center;
-    }
-    #goodmessage{background-color: whitesmoke;
-    display: block;
-  border-radius: 30px;
-  padding: 3%;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فرم اطلاعات تماس</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #e3f2fd 0%, #f0f2f5 100%);
+    margin: 0; padding: 24px 16px; min-height: 100vh;
   }
-  </style>
+  .container {
+    max-width: 760px; margin: 0 auto; background: #fff;
+    padding: 32px; border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  }
+  h1 { text-align: center; color: #1a237e; font-size: 1.5rem; margin: 0 0 8px; }
+  h2 { font-size: 1.05rem; color: #1a237e; margin: 28px 0 16px;
+       padding-bottom: 8px; border-bottom: 2px solid #e3f2fd; }
+  .subtitle { text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 28px; }
+  .form-group { margin-bottom: 18px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label.lbl { display: block; margin-bottom: 6px; font-weight: 500; color: #333; font-size: 0.95rem; }
+  .req { color: #e53935; }
+  input[type="text"], input[type="tel"], input[type="email"], select, textarea {
+    width: 100%; padding: 12px 14px; border: 1.5px solid #d0d5dd;
+    border-radius: 10px; font-family: inherit; font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s; background: #fafbfc;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: #1976d2; background: #fff;
+    box-shadow: 0 0 0 3px rgba(25,118,210,0.1);
+  }
+  input.error, select.error, textarea.error { border-color: #e53935; background: #fff5f5; }
+  .error-msg { color: #e53935; font-size: 0.82rem; margin-top: 5px; display: none; }
+  .error-msg.show { display: block; }
+  .hint { font-size: 0.78rem; color: #888; margin-top: 4px; }
+  .checkbox-group, .radio-group { display: flex; flex-wrap: wrap; gap: 10px; }
+  .checkbox-group label, .radio-group label {
+    display: flex; align-items: center; gap: 6px; padding: 9px 14px;
+    background: #f5f7fa; border: 1.5px solid transparent;
+    border-radius: 10px; cursor: pointer; font-weight: 400;
+    font-size: 0.9rem; transition: all 0.15s; user-select: none;
+  }
+  .checkbox-group label:hover, .radio-group label:hover { background: #eef2f7; }
+  .checkbox-group label:has(input:checked),
+  .radio-group label:has(input:checked) { background: #e3f2fd; border-color: #1976d2; }
+  .checkbox-group input:checked + span,
+  .radio-group input:checked + span { font-weight: 600; color: #1976d2; }
+  button {
+    width: 100%; padding: 14px; background: #1976d2; color: white;
+    border: none; border-radius: 10px; font-size: 1.05rem; font-weight: 600;
+    font-family: inherit; cursor: pointer; margin-top: 12px;
+    transition: background 0.2s, transform 0.1s;
+  }
+  button:hover:not(:disabled) { background: #1565c0; }
+  button:active:not(:disabled) { transform: scale(0.99); }
+  button:disabled { background: #90caf9; cursor: not-allowed; }
+  .message { margin-top: 20px; padding: 14px; border-radius: 10px;
+             text-align: center; display: none; font-size: 0.95rem; }
+  .message.success { display: block; background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .message.error { display: block; background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  @media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; gap: 0; } }
+  @media (max-width: 520px) {
+    .container { padding: 22px 18px; border-radius: 12px; }
+    body { padding: 12px 10px; }
+    h1 { font-size: 1.25rem; }
+  }
+</style>
 </head>
-
 <body>
+<div class="container">
+    <div style="direction: ltr;"> <picture><img src="./images/logocm01.png" alt="MOKARRAR LOGO" style="width: 50%;"></picture></div>
 
-<div id="overlayer" >
-<div id="goodmessage" style="margin: 0% 15%;">
-  <div style="justify-content:left"> <picture><img src="./statics/logocm01.png" alt="MOKARRAR LOGO" style="width: 20%;"></picture></div>
- 
+  <h1>فرم اطلاعات تماس</h1>
+  <p class="subtitle">لطفاً اطلاعات خود را با دقت تکمیل کنید. فیلدهای ستاره‌دار الزامی هستند.</p>
 
-  <h1>با تشکر از زمانی که گذاشتید</h1>
-<p>فرم شما ثبت شد</p>
-<p>نتیجه از طریق پیامک یا ایمیل به اطلاع شما خواهد رسید باتشکر.</p>
-<div style="color: red;">توجه: این فرم برای ثبت نام راییگان در کارگاه می باشد. لطفا جهت ثبت نام به وبسایت کنگره مراجعه فرماییدن.</div>
+  <form id="contactForm" novalidate>
 
-
-</div>
-</div>
-
-  
-  <div class="container">
-    <div style="direction: ltr;">
-<picture><img src="./statics/logocm01.png" alt="MOKARRAR LOGO"></picture>
-    </div>
-    
-    <h1>فرم ثبت اطلاعات برای ثبت نام در کارگاه تخصصی کنگره مهندسی عمران</h1>
-    <h2>شرکت 
-      <span style="color: #3dcff3;"> کامپوزیت </span>
-      مکرر
-      </h2>
-      <h3>توجه: این فرم برای ثبت</h3>
-    <p class="subtitle">پر کردن تمام فیلدهای ستاره‌دار الزامی است.</p>
-
-    <form id="userForm" name="userForm" novalidate>
-
-      <div class="form-grid">
-
-        <!-- نام و نام خانوادگی -->
-        <div class="full">
-          <label for="fullName">نام و نام خانوادگی <span class="req">*</span></label>
-          <input
-            type="text"
-            id="fullName"
-            name="fullName"
-            placeholder="مثال: علی محمدی"
-            autocomplete="name"
-            required>
-        </div>
-
-        <!-- کد ملی -->
-        <div>
-          <label for="nationalId">کد ملی <span class="more_info" title="برای صدور کارت و مجوز ها"> ℹ️</span></label>
-          <input
-            type="text"
-            id="nationalId"
-            name="nationalId"
-            placeholder="۱۰ رقم، مثال: 0012345678"
-            inputmode="numeric"
-            maxlength="11"
-            pattern="[0-9]{10}"
-            autocomplete="off"
-            >
-        </div>
-
-        <!-- شماره تماس -->
-        <div>
-          <label for="phone">شماره تماس <span class="req">*</span></label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="مثال: 09123456789"
-            inputmode="numeric"
-            maxlength="11"
-            pattern="09[0-9]{9}"
-            autocomplete="tel"
-            required>
-        </div>
-
-        <!-- رشته -->
-        <div class="full">
-          <label for="fieldOfStudy"> رشته و تخصص شما <span class="req">*</span></label>
-          <input
-            type="text"
-            id="fieldOfStudy"
-            name="fieldOfStudy"
-            placeholder="مثال:  محیط زیست / ژئوتکنیک"
-            required>
-        </div>
-
-        <!-- گروه -->
-        <div class="full">
-          <label for="userGroup">شامل کدام گروه می‌باشید؟ <span class="req">*</span></label>
-          <select id="userGroup" name="userGroup" required>
-            <option value="" selected disabled>— لطفاً انتخاب کنید —</option>
-            <option value="دانشجو">دانشجو</option>
-            <option value="هیئت علمی">هیئت علمی</option>
-            <option value="بخش خصوصی">بخش خصوصی</option>
-            <option value="بخش دولتی">  بخش دولتی  </option>
-            <option value="سایر">سایر</option>
-          </select>
-        </div>
-
-        <!-- لوگو -->
-        <!-- سازمان -->
-        <div class="full">
-          <label for="organ"> وابستگی سازمانی <span class="req">*</span></label>
-          <input
-            type="text"
-            id="organ"
-            name="organ"
-            placeholder="مثال:  دانشگاه صنعتی اصفهان / آبفای تهران ..."
-            required>
-        </div>
-
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="lbl" for="firstName">نام <span class="req">*</span></label>
+        <input type="text" id="firstName" placeholder="مثال: علی" autocomplete="given-name" maxlength="50">
+        <div class="error-msg" id="firstName-error"></div>
       </div>
+      <div class="form-group">
+        <label class="lbl" for="lastName">نام خانوادگی <span class="req">*</span></label>
+        <input type="text" id="lastName" placeholder="مثال: محمدی" autocomplete="family-name" maxlength="50">
+        <div class="error-msg" id="lastName-error"></div>
+      </div>
+    </div>
 
-              <!-- ایمیل -->
-        <div class="full">
-          <label for="email">  ایمیل </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="example@something.ex"
-            >
-        </div>
+    <div class="form-group">
+      <label class="lbl" for="companyName">نام شرکت / سازمان <span class="req">*</span></label>
+      <input type="text" id="companyName" placeholder="مثال: شرکت فناوران صنعت" maxlength="100">
+      <div class="hint">فقط حروف فارسی</div>
+      <div class="error-msg" id="companyName-error"></div>
+    </div>
 
+      <div class="form-group">
+        <label class="lbl" for="semat">سمت شغلی<span class="req">*</span></label>
+        <input type="text" id="semat" placeholder="مثال: مدیر‌عامل" autocomplete="family-name" maxlength="50">
+        <div class="error-msg" id="semat-error"></div>
+      </div>
+    
+    <div class="form-group">
+      <label class="lbl">در چه زمینه‌هایی فعالیت دارید؟ <span class="req">*</span></label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="activity" value="آب و کشاورزی"><span>آب و کشاورزی</span></label>
+        <label><input type="checkbox" name="activity" value="معدن"><span>معدن</span></label>
+        <label><input type="checkbox" name="activity" value="نفت و پتروشیمی"><span>نفت و پتروشیمی</span></label>
+        <label><input type="checkbox" name="activity" value="محل دفن و پسماند"><span>محل دفن و پسماند</span></label>
+        <label><input type="checkbox" name="activity" value="راهسازی"><span>راهسازی</span></label>
+        <label><input type="checkbox" name="activity" value="سازه و ساخت"><span>سازه و ساخت</span></label>
+        <label><input type="checkbox" name="activity" value="سایر" id="activityOther-check"><span>سایر</span></label>
+      </div>
+      <div id="activityOther-wrap" style="display:none; margin-top:10px;">
+        <input type="text" id="activityOther" placeholder="زمینه کاری خود را وارد کنید" maxlength="200">
+        <div class="error-msg" id="activityOther-error"></div>
+      </div>
+      <div class="error-msg" id="activity-group-error"></div>
+    </div>
 
-      <button type="submit" id="submitBtn">تأیید و ارسال</button>
-    </form>
+    <div class="form-group">
+      <label class="lbl">چه خدمتی را می‌خواهید دریافت کنید؟ <span class="req">*</span></label>
+      <div class="radio-group">
+        <label><input type="radio" name="service" value="مشاوره و طراحی"><span>مشاوره و طراحی</span></label>
+        <label><input type="radio" name="service" value="دریافت قیمت و پیش فاکتور"><span>دریافت قیمت و پیش فاکتور</span></label>
+        <label><input type="radio" name="service" value="اطلاعات مهم"><span>اطلاعات مهم</span></label>
+        <label><input type="radio" name="service" value="اطلاعات راجب محصولات"><span>اطلاعات راجب محصولات</span></label>
+        <label><input type="radio" name="service" value="سایر" id="serviceOther-radio"><span>سایر</span></label>
+      </div>
+      <div id="serviceOther-wrap" style="display:none; margin-top:10px;">
+        <input type="text" id="serviceOther" placeholder="خدمت مورد نظر را وارد کنید" maxlength="200">
+        <div class="error-msg" id="serviceOther-error"></div>
+      </div>
+      <div class="error-msg" id="service-group-error"></div>
+    </div>
 
-    <div id="message" role="status" aria-live="polite"></div>
-  </div>
+    <h2>اطلاعات تماس</h2>
 
-  <script>
-// const fields=['معدن','سازه',را]
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="lbl" for="phone">شماره تماس <span class="req">*</span></label>
+        <input type="tel" id="phone" placeholder="09123456789" inputmode="numeric" maxlength="11" autocomplete="tel">
+        <div class="hint">۱۱ رقم و شروع با ۰۹</div>
+        <div class="error-msg" id="phone-error"></div>
+      </div>
+      <div class="form-group">
+        <label class="lbl" for="email">ایمیل</label>
+        <input type="email" id="email" placeholder="example@email.com" autocomplete="email">
+        <div class="error-msg" id="email-error"></div>
+      </div>
+    </div>
 
-    /* ==========================================================
-       ۱) آدرس Web App گوگل‌اسکریپت را اینجا قرار دهید
-       ========================================================== */
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyZ7Ghs3Kst3cma0RHWG_nKHG-osqJmOo3QsVO6dIza0tKVdNLvhLRPH6C6iBl3dnaR9A/exec';
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="lbl" for="fax">فکس</label>
+        <input type="text" id="fax" placeholder="021-12345678">
+        <div class="hint">مثال: 021-12345678 یا +98-21-12345678</div>
+        <div class="error-msg" id="fax-error"></div>
+      </div>
+      <div class="form-group">
+        <label class="lbl" for="postalCode">کد پستی</label>
+        <input type="text" id="postalCode" placeholder="1234567890" inputmode="numeric" maxlength="10">
+        <div class="hint">۱۰ رقم</div>
+        <div class="error-msg" id="postalCode-error"></div>
+      </div>
+    </div>
 
+    <div class="form-group">
+      <label class="lbl" for="website">لینک به وبسایت شرکت یا شخصی</label>
+      <input type="text" id="website" placeholder="https://example.com">
+      <div class="error-msg" id="website-error"></div>
+    </div>
 
-    /* ---------- عناصر ---------- */
-    const form           = document.getElementById('userForm');
-    const messageDiv     = document.getElementById('message');
-    const submitBtn      = document.getElementById('submitBtn');
+    <button type="submit" id="submitBtn">ارسال اطلاعات</button>
+    <div class="message" id="formMessage"></div>
+  </form>
+</div>
 
+<script>
+// ⚠️ آدرس Apps Script خود را اینجا قرار دهید (توضیحات پایین)
+const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
-    let isLocked     = false;   // قفل ارسال
-    let countdownTimer = null;
+const PERSIAN_RE = /^[\u0600-\u06FF\u200C\s]+$/;
+const PHONE_RE   = /^09\d{9}$/;
+const EMAIL_RE   = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const POSTAL_RE  = /^\d{10}$/;
+const FAX_RE     = /^[+]?[0-9\s\-()]+$/;
 
-    /* ==========================================================
-       ۲) توابع کمکی نمایش پیام
-       ========================================================== */
-    function showError(text, el) {
-      messageDiv.className = 'error';
-      messageDiv.textContent = '❌' + text;
-      if (el) {
-        el.classList.add('invalid');
-        el.focus();
-      }
-    }
+const form = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formMessage = document.getElementById('formMessage');
+const v = id => document.getElementById(id).value.trim();
 
-    function showSuccess(text) {
-      messageDiv.className = 'success';
-      messageDiv.textContent = '✅ ' + text;
-    }
-
-    function clearMessage() {
-      messageDiv.className = '';
-      messageDiv.textContent = '';
-      form.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
-    }
-
-    /* ==========================================================
-       ۳) تبدیل و کوچک‌سازی تصویر لوگو به Base64
-       ========================================================== */
-    function fileToResizedDataURL(file, maxSize = 200, quality = 0.8) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onerror = () => reject(new Error('خطا در خواندن فایل لوگو'));
-        reader.onload = () => {
-          const img = new Image();
-
-          img.onerror = () => reject(new Error('فایل انتخاب‌شده تصویر معتبری نیست'));
-          img.onload = () => {
-            let { width, height } = img;
-
-            if (width >= height && width > maxSize) {
-              height = Math.round(height * maxSize / width);
-              width  = maxSize;
-            } else if (height > maxSize) {
-              width  = Math.round(width * maxSize / height);
-              height = maxSize;
-            }
-
-            const canvas = document.createElement('canvas');
-            canvas.width  = width;
-            canvas.height = height;
-
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#ffffff';                 // پس‌زمینه سفید برای خروجی JPEG
-            ctx.fillRect(0, 0, width, height);
-            ctx.drawImage(img, 0, 0, width, height);
-
-            resolve(canvas.toDataURL('image/jpeg', quality));
-          };
-
-          img.src = reader.result;
-        };
-
-        reader.readAsDataURL(file);
-      });
-    }
-
-
-
-    /* ==========================================================
-       ۴) مدیریت قفل و شمارش معکوس ۵ ثانیه‌ای
-       ========================================================== */
-    function unlockForm() {
-      isLocked = false;
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'تأیید و ارسال';
-    }
-
- 
-
-    /* ---------- ریست کامل فرم ---------- */
-    function resetForm() {
-      form.reset();
-
-      form.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
-    }
-
-    /* ==========================================================
-       ۵) اعتبارسنجی و ارسال
-       ========================================================== */
-    const PERSIAN_NAME_REGEX = /^[\u0600-\u06FF\u200c\s]{3,}$/;  // حروف فارسی + فاصله + نیم‌فاصله
-    const NATIONAL_ID_REGEX  = /^[0-9]{10}$/;                    // دقیقاً ۱۰ رقم
-    const PHONE_REGEX        = /^09[0-9]{9}$/;                   // ۱۱ رقم و شروع با 09
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      if (isLocked) return;      // جلوگیری از ارسال مجدد
-
-      clearMessage();
-
-      const fullName     = form.fullName.value;
-      const nationalId   = form.nationalId.value;
-      const email        =form.email.value;
-      const phone        = form.phone.value;
-      const fieldOfStudy = form.fieldOfStudy.value;
-      const userGroup    = form.userGroup.value;
-      const organ        = form.organ.value;
-      const userID=await getPublicIP();
-
-      /* --- اعتبارسنجی --- */
-      if (!fullName) {
-        return showError('لطفاً نام و نام خانوادگی را وارد کنید.', form.fullName);
-      }
-      if (!PERSIAN_NAME_REGEX.test(fullName)) {
-        return showError('نام و نام خانوادگی باید فقط با حروف فارسی و حداقل ۳ حرف نوشته شود.', form.fullName);
-      }
-      if ( nationalId && !NATIONAL_ID_REGEX.test(nationalId)) {
-        return showError('کد ملی باید دقیقاً یک عدد ۱۰ رقمی باشد.\n از کیبورد انگلیسی استفاده کنید', form.nationalId);
-      }
-
-      if ( email && !emailRegex.test(email) ) {
-        return showError('ایمیل معتبر نمی باشد\n از کیبورد انگلیسی استفاده کنید', form.email);
-      }
-
-
-
-      if (!PHONE_REGEX.test(phone)) {
-        return showError('شماره تماس باید ۱۱ رقمی و با 09 شروع شود. مثال: 09123456789', form.phone);
-      }
-      if (fieldOfStudy.length < 2) {
-        return showError('لطفاً رشته خود را وارد کنید (حداقل ۲ حرف).', form.fieldOfStudy);
-      }
-      if (organ.length < 2) {
-        return showError('لطفاً سازمان خود را وارد کنید (حداقل ۲ حرف).', form.organ);
-      }
-
-
-      if (!userGroup) {
-        return showError('لطفاً مشخص کنید شامل کدام گروه می‌باشید.', form.userGroup);
-      }
-
-      /* --- آماده‌سازی داده‌ها برای گوگل‌شیت --- */
-      const data = new URLSearchParams();
-      data.append('fullName',     fullName);      // نام و نام خانوادگی
-      data.append('nationalId',   nationalId || '0012345678');    // کد ملی
-      data.append('phone',        phone);         // شماره تماس
-      data.append('email',  email)
-      data.append('fieldOfStudy', fieldOfStudy);  // رشته
-      data.append('organ', organ);  // رشته
-      data.append('userGroup',    userGroup);     // گروه
-      data.append('userID',userID)
-      /* --- قفل کردن دکمه قبل از ارسال --- */
-      isLocked = true;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'در حال ارسال...';
-
-      try {
-        await fetch(scriptURL, {
-          method: 'POST',
-          mode: 'no-cors',          // جلوگیری از خطای CORS در گوگل‌اسکریپت
-          body: data
-        });
-
-        // چون mode = no-cors است، پاسخ قابل خواندن نیست و ارسال موفق فرض می‌شود
-        showSuccess('اطلاعات با موفقیت ثبت شد. با تشکر!');
-        document.getElementById('overlayer').style.display='flex'
-        resetForm();
-
-      } catch (error) {
-        showError('خطا در ارسال اطلاعات: ' +error.message);
-        unlockForm();               // در صورت خطا کاربر می‌تواند بلافاصله دوباره تلاش کند
-      }
-    });
-
-    /* ---------- حذف حالت خطا هنگام تایپ ---------- */
-    form.querySelectorAll('input, select, textarea').forEach(el => {
-      el.addEventListener('input', () => {
-        el.classList.remove('invalid');
-      });
-      el.addEventListener('change', () => {
-        el.classList.remove('invalid');
-      });
-    });
-
-    async function getPublicIP() {
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
-  } catch (error) {
-    console.error('Error fetching IP:', error);
-  }
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('error');
+  const err = document.getElementById(id + '-error');
+  if (err) { err.textContent = msg; err.classList.add('show'); }
+}
+function clearError(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('error');
+  const err = document.getElementById(id + '-error');
+  if (err) { err.classList.remove('show'); err.textContent = ''; }
+}
+function clearAllErrors() {
+  document.querySelectorAll('.error').forEach(e => e.classList.remove('error'));
+  document.querySelectorAll('.error-msg').forEach(e => { e.classList.remove('show'); e.textContent = ''; });
 }
 
-getPublicIP();
-  </script>
+function validateFax(value) {
+  if (!FAX_RE.test(value)) return false;
+  const digits = value.replace(/\D/g, '');
+  return digits.length >= 8 && digits.length <= 15;
+}
+
+function validateForm() {
+  clearAllErrors();
+  let valid = true;
+
+  if (!v('firstName')) { showError('firstName', 'نام الزامی است'); valid = false; }
+  if (!v('lastName'))  { showError('lastName',  'نام خانوادگی الزامی است'); valid = false; }
+  if (!v('semat'))  { showError('semat',  'سمت الزامی است'); valid = false; }
+
+
+  
+  if (!v('companyName')) { showError('companyName', 'نام شرکت / سازمان الزامی است'); valid = false; }
+  else if (!PERSIAN_RE.test(v('companyName'))) {
+    showError('companyName', 'لطفاً فقط حروف فارسی وارد کنید'); valid = false;
+  }
+
+  const activities = Array.from(document.querySelectorAll('input[name="activity"]:checked'));
+  if (activities.length === 0) {
+    showError('activity-group', 'حداقل یک زمینه فعالیت انتخاب کنید'); valid = false;
+  } else if (activities.some(a => a.value === 'سایر') && !v('activityOther')) {
+    showError('activityOther', 'لطفاً زمینه کاری خود را وارد کنید'); valid = false;
+  }
+
+  const service = document.querySelector('input[name="service"]:checked');
+  if (!service) {
+    showError('service-group', 'لطفاً یک خدمت انتخاب کنید'); valid = false;
+  } else if (service.value === 'سایر' && !v('serviceOther')) {
+    showError('serviceOther', 'لطفاً خدمت مورد نظر را وارد کنید'); valid = false;
+  }
+
+  if (!v('phone')) { showError('phone', 'شماره تماس الزامی است'); valid = false; }
+  else if (!PHONE_RE.test(v('phone'))) {
+    showError('phone', 'شماره باید ۱۱ رقم و با ۰۹ شروع شود'); valid = false;
+  }
+
+  if (v('email') && !EMAIL_RE.test(v('email'))) {
+    showError('email', 'فرمت ایمیل معتبر نیست'); valid = false;
+  }
+  if (v('fax') && !validateFax(v('fax'))) {
+    showError('fax', 'فرمت فکس معتبر نیست (حداقل ۸ رقم)'); valid = false;
+  }
+  if (v('postalCode') && !POSTAL_RE.test(v('postalCode'))) {
+    showError('postalCode', 'کد پستی باید دقیقاً ۱۰ رقم باشد'); valid = false;
+  }
+
+  return valid;
+}
+
+function collectData() {
+  const activities = Array.from(document.querySelectorAll('input[name="activity"]:checked'))
+    .map(cb => cb.value === 'سایر' ? `سایر: ${v('activityOther')}` : cb.value)
+    .join('، ');
+
+  const serviceRadio = document.querySelector('input[name="service"]:checked');
+  const serviceType = serviceRadio.value === 'سایر'
+    ? `سایر: ${v('serviceOther')}`
+    : serviceRadio.value;
+
+  return {
+    firstName:   v('firstName'),
+    lastName:    v('lastName'),
+    semat:v('semat'),
+    companyName: v('companyName'),
+    activities:  activities,
+    serviceType: serviceType,
+    phone:       v('phone'),
+    email:       v('email'),
+    fax:         v('fax'),
+    postalCode:  v('postalCode'),
+    website:     v('website'),
+  };
+}
+
+// نمایش/مخفی کردن فیلد «سایر» برای زمینه فعالیت
+document.getElementById('activityOther-check').addEventListener('change', function () {
+  const wrap  = document.getElementById('activityOther-wrap');
+  const input = document.getElementById('activityOther');
+  if (this.checked) { wrap.style.display = 'block'; input.focus(); }
+  else { wrap.style.display = 'none'; input.value = ''; clearError('activityOther'); }
+});
+
+// نمایش/مخفی کردن فیلد «سایر» برای خدمت درخواستی
+document.querySelectorAll('input[name="service"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const wrap  = document.getElementById('serviceOther-wrap');
+    const input = document.getElementById('serviceOther');
+    if (document.getElementById('serviceOther-radio').checked) {
+      wrap.style.display = 'block'; input.focus();
+    } else {
+      wrap.style.display = 'none'; input.value = ''; clearError('serviceOther');
+    }
+  });
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  formMessage.className = 'message';
+  formMessage.textContent = '';
+
+  if (!validateForm()) {
+    const firstErr = document.querySelector('.error');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'در حال ارسال...';
+
+  try {
+    const data = collectData();
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    });
+    formMessage.className = 'message success';
+    formMessage.textContent = '✅ اطلاعات شما با موفقیت ثبت شد. به زودی با شما تماس خواهیم گرفت.';
+    form.reset();
+    document.getElementById('activityOther-wrap').style.display = 'none';
+    document.getElementById('serviceOther-wrap').style.display = 'none';
+    formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (err) {
+    console.error(err);
+    formMessage.className = 'message error';
+    formMessage.textContent = '❌ خطا در ارسال اطلاعات. لطفاً اتصال اینترنت را بررسی کرده و دوباره تلاش کنید.';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'ارسال اطلاعات';
+  }
+});
+
+// پاک کردن خطا هنگام تایپ
+document.querySelectorAll('input, select, textarea').forEach(el => {
+  el.addEventListener('input', () => clearError(el.id));
+});
+document.querySelectorAll('input[name="activity"]').forEach(el => {
+  el.addEventListener('change', () => clearError('activity-group'));
+});
+document.querySelectorAll('input[name="service"]').forEach(el => {
+  el.addEventListener('change', () => clearError('service-group'));
+});
+</script>
 </body>
 </html>
